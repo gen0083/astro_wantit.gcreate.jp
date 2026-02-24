@@ -1,0 +1,12 @@
+[tools]
+node = "24.13.0"
+
+[tasks.dev]
+run = "npm run astro dev"
+description = "Start the development server"
+
+[tasks.dev_f]
+run = "npm run astro dev --force"
+
+[tasks.sync]
+run = "npm run astro sync"
