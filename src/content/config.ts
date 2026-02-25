@@ -11,7 +11,7 @@ const postCollection = defineCollection({
     slug: z.string().optional(),
     description: z.string().optional(),
     featuredimage: z.string().optional(),
-    date: z.coerce.date().optional(),
+    date: z.coerce.date(),
     lastmod: z.coerce.date().optional(),
     tags: z.array(z.string()).optional(),
     product: z.object({
