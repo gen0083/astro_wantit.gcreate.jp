@@ -1,0 +1,41 @@
+---
+import type { Page } from "astro";
+
+interface Props {
+  page: Page<any>;
+  fromCurrent?: number;
+}
+
+const { page, fromCurrent = 3 } = Astro.props;
+const isFirst = page.currentPage == 1;
+const isLast = page.currentPage == page.lastPage;
+const from = Math.max(1, page.currentPage - fromCurrent);
+const to = Math.min(page.lastPage, page.currentPage + fromCurrent);
+const pages = Array.from({ length: to - from + 1 }, (_, i) => from + i);
+const goToFirstPage = from != 1;
+const goToLastPage = to != page.lastPage;
+---
+
+<ul>
+  {
+    goToFirstPage ? (
+      <li>
+        <a href="/">最初</a>
+      </li>
+    ) : null
+  }
+  {
+    pages.map((i) => (
+      <li>
+        <a href={i.toString()}>{i}</a>
+      </li>
+    ))
+  }
+  {
+    goToLastPage ? (
+      <li>
+        <a href={page.url.last}>最後</a>
+      </li>
+    ) : null
+  }
+</ul>
