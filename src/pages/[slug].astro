@@ -1,14 +1,18 @@
 ---
-import { render } from 'astro:content';
-import { getCollection } from 'astro:content';
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection('post');
-  return allPosts.map(post => {
+  const allPosts = await getCollection("post");
+  return allPosts.map((post) => {
     // frontmatterのslugフィールドを優先的に使用、なければpost.slugを使用
-    console.log("読み込まれたID一覧:", allPosts.map(p => p.id));
+    console.log(
+      "読み込まれたID一覧:",
+      allPosts.map((p) => p.id),
+    );
     return {
-      params: { slug: post.data.slug || post.id }, 
+      params: { slug: post.data.slug || post.id },
       props: { post },
     };
   });
@@ -18,5 +22,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<h1>{post.data.title}</h1>
-<Content />
+<BaseLayout pageTitle={post.data.title}>
+  <h1>{post.data.title}</h1>
+  <Content />
+</BaseLayout>
