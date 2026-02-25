@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const sortedPosts = (await getCollection("post")).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+
+  return paginate(sortedPosts, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+const pageTitle = "トップページ";
+const { page } = Astro.props;
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <h1>{page.currentPage}</h1>
+  <ul>
+    {
+      page.data.map((p) => (
+        <li>
+          <a href={p.data.slug || p.id}>{p.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
