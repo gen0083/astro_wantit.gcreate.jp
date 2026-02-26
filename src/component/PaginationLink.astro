@@ -16,26 +16,48 @@ const goToFirstPage = from != 1;
 const goToLastPage = to != page.lastPage;
 ---
 
-<ul>
+<ul class="navigation">
   {
-    goToFirstPage ? (
-      <li>
+    goToFirstPage && (
+      <li class:list={["first", { active: page.currentPage === 1 }]}>
         <a href="/">最初</a>
       </li>
-    ) : null
+    )
   }
   {
-    pages.map((i) => (
-      <li>
-        <a href={i.toString()}>{i}</a>
-      </li>
-    ))
+    pages.map((i) => {
+      const isActive = page.currentPage == i;
+      return (
+        <li class:list={["pages", { active: isActive }]}>
+          {page.currentPage == i ? <span>{i}</span> : <a href={i.toString()}>{i}</a>}
+        </li>
+      );
+    })
   }
   {
-    goToLastPage ? (
-      <li>
+    goToLastPage && (
+      <li class:list={["last", { active: page.currentPage == page.lastPage }]}>
         <a href={page.url.last}>最後</a>
       </li>
-    ) : null
+    )
   }
 </ul>
+
+<style>
+  .navigation {
+    display: block;
+  }
+  .navigation > li {
+    display: inline-block;
+    list-style: none;
+    margin: 0.5rem 1rem;
+    background-color: blanchedalmond;
+  }
+  .navigation > li > a, .navigation > li > span {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+  }
+  .navigation > li.active {
+    background-color: grey;
+  }
+</style>
