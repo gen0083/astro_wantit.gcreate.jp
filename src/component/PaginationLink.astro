@@ -3,14 +3,12 @@ import type { Page } from "astro";
 
 interface Props {
   page: Page<any>;
-  fromCurrent?: number;
+  num?: number;
 }
 
-const { page, fromCurrent = 3 } = Astro.props;
-const isFirst = page.currentPage == 1;
-const isLast = page.currentPage == page.lastPage;
-const from = Math.max(1, page.currentPage - fromCurrent);
-const to = Math.min(page.lastPage, page.currentPage + fromCurrent);
+const { page, num = 5 } = Astro.props;
+const from = Math.max(1, page.currentPage - Math.floor(num / 2));
+const to = Math.min(page.lastPage, from + num - 1);
 const pages = Array.from({ length: to - from + 1 }, (_, i) => from + i);
 const goToFirstPage = from != 1;
 const goToLastPage = to != page.lastPage;
@@ -20,16 +18,19 @@ const goToLastPage = to != page.lastPage;
   {
     goToFirstPage && (
       <li class:list={["first", { active: page.currentPage === 1 }]}>
-        <a href="/">最初</a>
+        <a href="/">|&lt;</a>
       </li>
     )
   }
   {
     pages.map((i) => {
       const isActive = page.currentPage == i;
+      const isFirst = i == 1;
+      const isLast = i == page.lastPage;
+      const label = `${isFirst ? "|< " : ""}${i}${isLast ? " >|" : ""}`;
       return (
         <li class:list={["pages", { active: isActive }]}>
-          {page.currentPage == i ? <span>{i}</span> : <a href={i.toString()}>{i}</a>}
+          {page.currentPage == i ? <span>{label}</span> : <a href={i.toString()}>{label}</a>}
         </li>
       );
     })
@@ -37,7 +38,7 @@ const goToLastPage = to != page.lastPage;
   {
     goToLastPage && (
       <li class:list={["last", { active: page.currentPage == page.lastPage }]}>
-        <a href={page.url.last}>最後</a>
+        <a href={page.url.last}>&gt;|</a>
       </li>
     )
   }
