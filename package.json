@@ -17,8 +17,9 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "prettier": "3.8.1",
-    "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.7.2"
+    "@typescript-eslint/parser": "^8.56.1",
+    "dprint": "^0.52.0",
+    "eslint": "^10.0.2",
+    "eslint-plugin-astro": "^1.6.0"
   }
 }
