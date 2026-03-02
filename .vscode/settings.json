@@ -2,7 +2,7 @@
   "editor.defaultFormatter": "dprint.dprint",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.addMissingImports": true
+    "source.addMissingImports": "explicit"
   },
   "[astro]": {
     "editor.defaultFormatter": "dprint.dprint"
