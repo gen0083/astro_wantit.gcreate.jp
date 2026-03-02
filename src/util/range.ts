@@ -11,18 +11,18 @@ export interface RangeProps {
  * endの方が小さい値の場合、空の配列を返す。
  * またstartとendが同じ数値の場合も、空の配列を返す。
  * * @param start - 開始する数値(inclusive)
- * @param end - 終了する数値(exclusive)
+ * @param end - 終了する数値(inclusive)
  * * @example
  * ```ts
  * const numbers = range(1, 4);
- * console.log(numbers); // [1, 2, 3]
+ * console.log(numbers); // [1, 2, 3, 4]
  * ```
- * * @returns `start` から `end - 1` までの数値が入った配列
+ * * @returns `start` から `end` までの数値が入った配列
  */
 export const range = ({ start = 0, end }: RangeProps): Array<number> => {
   if (start == end) return [start];
   if (start < end) {
-    return Array.from({ length: end - start }, (_, i) => i + start);
+    return Array.from({ length: end - start + 1 }, (_, i) => i + start);
   } else {
     return [];
   }

@@ -4,40 +4,57 @@ import { range } from "./range";
 export interface PaginationPage {
   label: string;
   url: string | undefined;
+  isActive: boolean;
 }
 
-const ellipse = -1;
+// 省略記号扱いする値（マジックナンバー）
+const ELLIPSE = -1;
+const ELLIPSE_STRING = "...";
 
 export const makePaginationLink = (
   { page, num = 5 }: { page: Page<any>; num?: number },
 ): PaginationPage[] => {
-  const moreThanOnePage = page.start != page.lastPage;
-  const from = Math.max(1, page.currentPage - Math.floor(num / 2));
-  const to = moreThanOnePage ? Math.min(page.lastPage - 1, from + num - 1) : 0;
+  // 最初と最後のページは特別扱いするので範囲に含まない
+  const startPage = 2;
+  const lastPage = page.lastPage - 1;
+
+  // ページネーションが存在しない場合（1ページで住む場合）空の配列を返す
+  if (page.total <= page.size) return [];
+
+  // 配列の最初と最後のページを計算する（最初と最後は除く）
+  let from = Math.max(startPage, page.currentPage - Math.floor(num / 2));
+  let to = Math.min(lastPage, from + num - 1);
+  // 要素数がnumに満たない場合、開始位置をずらす
+  if (to - from < num) {
+    from = Math.max(startPage, to - num + 1);
+  }
+  // 表示範囲のページ番号の配列を作成
   const pages = range({ start: from, end: to });
+  // 先頭がstartを含まない場合1, ...を追加する
   if (pages.at(0) != 1) {
-    if ((pages.at(0) ?? 1) > 2) {
-      pages.unshift(1, ellipse);
+    if ((pages.at(0) ?? 1) > startPage) {
+      pages.unshift(1, ELLIPSE);
     } else {
       pages.unshift(1);
     }
   }
   if (pages.at(-1) != page.lastPage) {
-    if ((pages.at(-1) ?? page.lastPage) < page.lastPage) {
-      pages.push(ellipse, page.lastPage);
+    if ((pages.at(-1) ?? page.lastPage) < lastPage) {
+      pages.push(ELLIPSE, page.lastPage);
     } else {
       pages.push(page.lastPage);
     }
   }
 
   return pages.map((i) => {
-    const label = i == ellipse ? "..." : `${i}`;
+    const label = i == ELLIPSE ? ELLIPSE_STRING : `${i}`;
     // 1ページめは'/'になる
     const url = i == 1 ? "/" : `./${i}`;
     return {
-      label: i == ellipse ? "..." : `${i}`,
+      label: label,
       // elilipseもしくはcurrentPageはリンクしない
-      url: i != page.currentPage && i != -1 ? url : undefined,
+      url: i != page.currentPage && i != ELLIPSE ? url : undefined,
+      isActive: i == page.currentPage,
     };
   });
 };

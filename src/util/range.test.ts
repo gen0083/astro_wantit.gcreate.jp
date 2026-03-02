@@ -5,7 +5,7 @@ import { range } from "./range";
 describe("range()", () => {
   it("指定した範囲の数値配列を生成できること", () => {
     // 3から6まで
-    expect(range({ start: 3, end: 6 })).toEqual([3, 4, 5]);
+    expect(range({ start: 3, end: 6 })).toEqual([3, 4, 5, 6]);
   });
 
   it("開始と終了が同じ場合は1つだけ要素を返すこと", () => {
@@ -17,6 +17,6 @@ describe("range()", () => {
   });
 
   it("0を含む範囲も正しく生成できること", () => {
-    expect(range({ start: -1, end: 2 })).toEqual([-1, 0, 1]);
+    expect(range({ start: -1, end: 2 })).toEqual([-1, 0, 1, 2]);
   });
 });

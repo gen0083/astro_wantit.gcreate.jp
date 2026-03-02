@@ -1,0 +1,30 @@
+---
+import { cn } from "../util/cn";
+
+interface Props {
+  label: string;
+  url: string | undefined;
+}
+
+const { label, url } = Astro.props;
+---
+{url ? (
+  <a
+    href={url}
+    class={cn(
+      "flex items-center",
+      "px-2 py-1",
+      "bg-amber-500",
+      "rounded-sm",
+    )}
+  >{label}</a>
+) : (
+   <span
+     class={cn(
+       "flex items-center",
+       "px-2 py-1",
+       "bg-gray-300",
+       "rounded-t-xs",
+     )}
+   >{label}</span>
+ )}
