@@ -1,8 +1,9 @@
 ---
-import { getCollection } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
 import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import ArticleCard from "../component/ArticleCard.astro";
 import PaginationLink from "../component/PaginationLink.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const sortedPosts = (await getCollection("post")).sort(
@@ -17,15 +18,12 @@ const { page } = Astro.props;
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h1>{page.currentPage}</h1>
-  <ul>
-    {
-      page.data.map((p) => (
-        <li>
-          <a href={p.data.slug || p.id}>{p.data.title}</a>
-        </li>
-      ))
-    }
+  <ul class="flex flex-col gap-6 max-w-2xl mx-auto">
+    {page.data.map((post) => (
+      <li>
+        <ArticleCard post={post} />
+      </li>
+    ))}
   </ul>
   <PaginationLink page={page} />
 </BaseLayout>
