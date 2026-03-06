@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getSummary, toParagraphs } from "../util/contents";
+
+interface Props {
+  post: CollectionEntry<"post">;
+}
+
+const { post } = Astro.props;
+
+const summary = getSummary(post);
+const paragraphs = toParagraphs(summary);
+---
+<div class="flex flex-col">
+  {paragraphs.map((p) => (
+    <p class="text-sm text-gray-900 px-0.5 indent-[1em]">
+      {p}
+    </p>
+  ))}
+</div>
