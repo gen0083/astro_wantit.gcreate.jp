@@ -7,11 +7,12 @@ import ArticleSummary from "./ArticleSummary.astro";
 
 interface Props {
   post: CollectionEntry<"post">;
+  category: string;
 }
 
-const { post } = Astro.props;
+const { post, category } = Astro.props;
 
-const imagePath = getCoverImage("diy");
+const imagePath = getCoverImage(category);
 ---
 <article
   class={cn(
@@ -22,7 +23,7 @@ const imagePath = getCoverImage("diy");
   )}
 >
   <div class="aspect-video w-full overflow-hidden">
-    <Image src={imagePath} alt={`category image`} />
+    <Image src={imagePath} alt={`${category} image`} />
   </div>
   <h2 class="text-xl font-bold leading-tight">
     <a

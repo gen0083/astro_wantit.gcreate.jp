@@ -1,3 +1,4 @@
+import { getCategorySlug } from "@/util/url";
 import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
@@ -5,10 +6,13 @@ const postCollection = defineCollection({
   loader: glob({
     pattern: "**/[^_]*.{md,mdx}",
     base: "./src/content/post",
+    generateId: ({ entry, base }) => {
+      return getCategorySlug(entry);
+    },
   }),
   schema: z.object({
     title: z.string(),
-    slug: z.string().optional(),
+    slug: z.string(),
     description: z.string().optional(),
     featuredimage: z.string().optional(),
     date: z.coerce.date(),

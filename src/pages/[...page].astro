@@ -1,4 +1,5 @@
 ---
+import { splitCategoryAndSlug } from "@/util/url";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import ArticleCard from "../component/ArticleCard.astro";
@@ -19,11 +20,14 @@ const { page } = Astro.props;
 
 <BaseLayout pageTitle={pageTitle}>
   <ul class="flex flex-col gap-6 max-w-2xl mx-auto">
-    {page.data.map((post) => (
-      <li>
-        <ArticleCard post={post} />
-      </li>
-    ))}
+    {page.data.map((post) => {
+      const [category] = splitCategoryAndSlug(post.id);
+      return (
+        <li>
+          <ArticleCard post={post} category={category} />
+        </li>
+      );
+    })}
   </ul>
   <PaginationLink page={page} />
 </BaseLayout>
