@@ -13,7 +13,7 @@ export const getCategorySlug = (entry: string) => {
  *   return slug;
  * });
  */
-export const splitCategoryAndSlug = (id: string) => {
+export const splitCategoryAndSlugFromPostId = (id: string) => {
   const [category, slug] = id.split("/");
   return {
     category: category,

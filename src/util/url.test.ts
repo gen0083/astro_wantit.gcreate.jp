@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCategorySlug, splitCategoryAndSlug } from "./url";
+import { getCategorySlug, splitCategoryAndSlugFromPostId } from "./url";
 
 describe("getCategorySlug", () => {
   it("最後の.mdだけ除いたものが返る", () => {
@@ -22,13 +22,13 @@ describe("getCategorySlug", () => {
 describe("splitCategoryId", () => {
   it("categoryとidが取得できる", () => {
     const text = "diy/sample";
-    const { category, slug } = splitCategoryAndSlug(text);
+    const { category, slug } = splitCategoryAndSlugFromPostId(text);
     expect(category).toEqual("diy");
     expect(slug).toEqual("sample");
   });
   it("indexありのパターン", () => {
     const text = "diy/sample/index";
-    const { category, slug } = splitCategoryAndSlug(text);
+    const { category, slug } = splitCategoryAndSlugFromPostId(text);
     expect(category).toEqual("diy");
     expect(slug).toEqual("sample");
   });
