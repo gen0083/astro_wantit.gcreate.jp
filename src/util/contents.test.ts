@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { convertLineBreakToHtml, getSummary, toParagraphs } from "./contents";
+import { getSummary, toParagraphs } from "./contents";
 
 describe("getSummary()", () => {
   describe("descriptionがあるパターン", () => {
