@@ -1,4 +1,6 @@
 ---
+import { getCoverImage } from "@/constants/coverImage";
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { cn } from "../util/cn";
 import ArticleSummary from "./ArticleSummary.astro";
@@ -8,6 +10,8 @@ interface Props {
 }
 
 const { post } = Astro.props;
+
+const imagePath = getCoverImage("diy");
 ---
 <article
   class={cn(
@@ -17,6 +21,9 @@ const { post } = Astro.props;
     "hover:shadow-lg",
   )}
 >
+  <div class="aspect-video w-full overflow-hidden">
+    <Image src={imagePath} alt={`category image`} />
+  </div>
   <h2 class="text-xl font-bold leading-tight">
     <a
       href={post.data.slug || post.id}
