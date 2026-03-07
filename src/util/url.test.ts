@@ -22,14 +22,14 @@ describe("getCategorySlug", () => {
 describe("splitCategoryId", () => {
   it("categoryとidが取得できる", () => {
     const text = "diy/sample";
-    const [category, id] = splitCategoryAndSlug(text);
+    const { category, slug } = splitCategoryAndSlug(text);
     expect(category).toEqual("diy");
-    expect(id).toEqual("sample");
+    expect(slug).toEqual("sample");
   });
   it("indexありのパターン", () => {
     const text = "diy/sample/index";
-    const [category, id] = splitCategoryAndSlug(text);
+    const { category, slug } = splitCategoryAndSlug(text);
     expect(category).toEqual("diy");
-    expect(id).toEqual("sample");
+    expect(slug).toEqual("sample");
   });
 });

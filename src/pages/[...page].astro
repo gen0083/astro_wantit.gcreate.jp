@@ -21,7 +21,7 @@ const { page } = Astro.props;
 <BaseLayout pageTitle={pageTitle}>
   <ul class="flex flex-col gap-6 max-w-2xl mx-auto">
     {page.data.map((post) => {
-      const [category] = splitCategoryAndSlug(post.id);
+      const { category } = splitCategoryAndSlug(post.id);
       return (
         <li>
           <ArticleCard post={post} category={category} />
