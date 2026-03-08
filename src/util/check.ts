@@ -5,14 +5,14 @@ export const checkSlugIsUnique = async (posts: CollectionEntry<"post">[]) => {
   const uniqueSlugs = new Map<string, string[]>();
   const dupulicated: string[] = [];
   posts.forEach((post) => {
-    const { slug } = splitCategoryAndSlugFromPostId(post.id);
-    const finalSlug = post.data.slug ?? slug;
-    if (uniqueSlugs.has(finalSlug)) {
-      dupulicated.push(finalSlug);
+    const { slug: fileId } = splitCategoryAndSlugFromPostId(post.id);
+    const slug = post.data.slug ?? fileId;
+    if (uniqueSlugs.has(slug)) {
+      dupulicated.push(slug);
     }
-    uniqueSlugs.set(finalSlug, [
-      ...(uniqueSlugs.get(finalSlug) ?? []),
-      post.id,
+    uniqueSlugs.set(slug, [
+      ...(uniqueSlugs.get(slug) ?? []),
+      post.filePath ?? "",
     ]);
   });
   if (dupulicated.length > 0) {
