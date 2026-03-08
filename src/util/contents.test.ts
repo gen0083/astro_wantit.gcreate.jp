@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getSummary, toParagraphs } from "./contents";
+import { getCollectionEntryPost, getSummary, toParagraphs } from "./contents";
 
 describe("getSummary()", () => {
   describe("descriptionがあるパターン", () => {
@@ -65,5 +65,12 @@ describe("toParagraphs", () => {
     const data = "1\n\n\n2";
     const result = toParagraphs(data);
     expect(result).toEqual(["1", "2"]);
+  });
+});
+
+describe("getCollectionEntryPost", () => {
+  it("test", async () => {
+    const allPosts = await getCollectionEntryPost();
+    expect(allPosts).has("category");
   });
 });
