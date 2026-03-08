@@ -1,11 +1,13 @@
 ---
 import { checkSlugIsUnique } from "@/util/check";
+import { getCollectionEntryPost } from "@/util/contents";
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection("post");
+  const allPosts = await getCollectionEntryPost();
+  // slugの重複チェック
   checkSlugIsUnique(allPosts);
   return allPosts.map((post) => {
     // frontmatterのslugフィールドを優先的に使用、なければpost.slugを使用
