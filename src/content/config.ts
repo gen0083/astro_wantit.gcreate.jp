@@ -32,6 +32,17 @@ const postCollection = defineCollection({
   }),
 });
 
+const forsiteCollection = defineCollection({
+  loader: glob({
+    pattern: "**/[^_]*.md",
+    base: "./src/content/forsite",
+  }),
+  schema: z.object({
+    title: z.string(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
+  forsite: forsiteCollection,
 };
