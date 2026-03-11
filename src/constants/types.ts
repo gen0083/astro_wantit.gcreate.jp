@@ -1,4 +1,5 @@
 export type TagInformation = {
-	display: string,
-	url: string,
+  origin: string;
+  display: string;
+  url: string;
 };

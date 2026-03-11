@@ -1,7 +1,8 @@
 ---
 import ArticleCard from "@/component/ArticleCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getAllTags, getCollectionEntryPost } from "@/util/contents";
+import { getCollectionEntryPost } from "@/util/contents";
+import { getAllTags } from "@/util/tags";
 import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async () => {

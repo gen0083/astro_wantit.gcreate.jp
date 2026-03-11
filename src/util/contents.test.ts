@@ -79,20 +79,3 @@ describe("getCollectionEntryPost", () => {
     expect(allPosts).has("category");
   });
 });
-
-describe("getAllTags", () => {
-  it("タグの一覧が取得できる", async () => {
-    const dummyPosts = [
-      { data: { tags: ["TypeScript", "Android", "Rust"] } },
-      { data: { tags: ["Java"] } },
-    ] as any;
-    const allTags = await getAllTags(dummyPosts);
-    expect(allTags).toEqual([
-      { tag: "TypeScript", url: "typescript" },
-      { tag: "Android", url: "android" },
-      { tag: "Rust", url: "rust" },
-      { tag: "Java", url: "java" },
-    ]);
-  });
-  it("重複したタグがある場合", () => {});
-});

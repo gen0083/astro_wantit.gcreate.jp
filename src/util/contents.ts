@@ -38,19 +38,3 @@ export const getCollectionEntryPost = async (): Promise<
     };
   });
 };
-
-export const getAllTags = (
-  posts: CollectionEntry<"post">[],
-): TagInformation[] => {
-  return [
-    ...new Set(
-      posts.flatMap(
-        (p) =>
-          p.data.tags?.map((tag) => ({
-            display: tag,
-            url: tag.toLowerCase(),
-          })) ?? [],
-      ),
-    ),
-  ];
-};
