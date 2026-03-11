@@ -5,6 +5,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://wantit.gcreate.jp',
+  trailingSlash: 'always',
   vite: {
     server: {
       watch: {
