@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { checkSlugIsUnique } from "./check";
 import { splitCategoryAndSlugFromPostId } from "./url";
+import type { TagInformation } from "@/constants/types";
 
 export const toParagraphs = (text: string): string[] => {
   return text
@@ -36,4 +37,20 @@ export const getCollectionEntryPost = async (): Promise<
       category,
     };
   });
+};
+
+export const getAllTags = (
+  posts: CollectionEntry<"post">[],
+): TagInformation[] => {
+  return [
+    ...new Set(
+      posts.flatMap(
+        (p) =>
+          p.data.tags?.map((tag) => ({
+            display: tag,
+            url: tag.toLowerCase(),
+          })) ?? [],
+      ),
+    ),
+  ];
 };

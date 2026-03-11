@@ -1,0 +1,29 @@
+---
+import ArticleCard from "@/component/ArticleCard.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getAllTags, getCollectionEntryPost } from "@/util/contents";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+  const allPosts = await getCollectionEntryPost();
+  // ユニークタグのリストを取得
+  const uniqueTags = getAllTags(allPosts);
+  // タグごとにフィルタされたpostの一覧を返す
+  const filterdPosts = uniqueTags.map((tag) => {
+    const filterd = allPosts.filter((post) =>
+      post.data.tags?.includes(tag.display)
+    );
+    return {
+      params: { tag: tag.url },
+      props: { pages: filterd, title: tag.display },
+    };
+  });
+  return filterdPosts;
+}) satisfies GetStaticPaths;
+
+const { tag } = Astro.params;
+const { pages, title } = Astro.props;
+---
+<BaseLayout pageTitle={title}>
+  {pages.map((post) => <ArticleCard post={post} />)}
+</BaseLayout>

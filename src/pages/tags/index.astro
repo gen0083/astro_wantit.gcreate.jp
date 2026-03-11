@@ -1,3 +1,24 @@
 ---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getAllTags } from "@/util/contents";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = async () => {
+  const allPosts = await getCollection("post");
+
+  const uniqueTags = [...new Set(allPosts.flatMap((p) => p.data.tags))];
+  return uniqueTags.map((tag) => {
+    const lowerCase = tag?.toLocaleLowerCase();
+    return { params: { tags: lowerCase } };
+  });
+};
+
+const tags = getAllTags(await getCollection("post"));
 ---
-tagの一覧ページ
+<BaseLayout pageTitle="タグ一覧">
+  {tags.map((tag) => (
+    <div>
+      <p><a href={`/tags/${tag.url}/`}>{tag.display}</a></p>
+    </div>
+  ))}
+</BaseLayout>
