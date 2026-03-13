@@ -1,6 +1,10 @@
 {
   "typescript": {
-    "preferSingleLine": false
+    "preferSingleLine": false,
+    "indentWidth": 2,
+    "useTabs": false,
+    "quoteStyle": "preferSingle",
+    "ensureNewLineAtEndOfFile": true
   },
   "excludes": [
     "**/node_modules",
