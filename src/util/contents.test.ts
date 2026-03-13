@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  getAllTags,
   getCollectionEntryPost,
   getSummary,
   toParagraphs,
@@ -74,8 +73,15 @@ describe("toParagraphs", () => {
 });
 
 describe("getCollectionEntryPost", () => {
+  // 実データからカテゴリが設定されているかのテストを行う
+  // 型で防いでいるのだから不要ではと思うものの、意味はあるらしい
   it("test", async () => {
     const allPosts = await getCollectionEntryPost();
-    expect(allPosts).has("category");
+    allPosts.forEach((post) => {
+      // カテゴリがちゃんと設定されているか
+      expect(post, `error on ${post.filePath}`).toHaveProperty("category");
+      // カテゴリに文字列がちゃんと設定されているか
+      expect(post.category.trim().length).toBeGreaterThan(0);
+    });
   });
 });
