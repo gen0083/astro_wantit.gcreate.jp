@@ -1,7 +1,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { splitCategoryAndSlugFromPostId } from "./url";
 
-export const checkSlugIsUnique = async (posts: CollectionEntry<"post">[]) => {
+export const checkSlugIsUnique = (posts: CollectionEntry<"post">[]) => {
   const uniqueSlugs = new Map<string, string[]>();
   const dupulicated: string[] = [];
   posts.forEach((post) => {
@@ -17,9 +17,7 @@ export const checkSlugIsUnique = async (posts: CollectionEntry<"post">[]) => {
   });
   if (dupulicated.length > 0) {
     // 長さが異なる＝重複したものが中にある
-    const errorPath = dupulicated.map((slug) => {
-      return uniqueSlugs.get(slug)?.join("\n");
-    });
+    const errorPath = dupulicated.map((slug) => uniqueSlugs.get(slug)?.join("\n"));
     throw new Error(`記事のslugが重複しています。\n${errorPath}`);
   }
 };
