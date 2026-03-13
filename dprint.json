@@ -1,16 +1,7 @@
 {
   "typescript": {
-    "preferSingleLine": false,
+    "preferSingleLine": false
   },
-  "json": {
-  },
-  "markdown": {
-  },
-  "html": {
-  },
-  "includes": [
-    "**/*.{ts,tsx,js,jsx,json,md,astro}"
-  ],
   "excludes": [
     "**/node_modules",
     "**/*-lock.json",

@@ -1,10 +1,23 @@
 {
   "editor.defaultFormatter": "dprint.dprint",
   "editor.formatOnSave": true,
+  "dprint.verbose": true,
   "editor.codeActionsOnSave": {
     "source.addMissingImports": "explicit"
   },
-  "[astro]": {
+  "[typescript]": {
     "editor.defaultFormatter": "dprint.dprint"
-  }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
 }
