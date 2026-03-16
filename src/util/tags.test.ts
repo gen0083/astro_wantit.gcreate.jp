@@ -40,10 +40,11 @@ describe("getAllTags", () => {
 	]);
   });
   it("表記揺れに関してはノーマライズした上でURLが同じなら同じタグと判定する", async () => {
+	// TODO: 表記揺れに関してprograming Programingと来た時はprograming表記になってしまうがこれをどう扱うかという問題がある
 	const dummy = [
 		{data: {tags: ["Rust", "programing"]}},
 		{data: {tags: ["rust", "Android"]}},
-		{data: {tags: ["r u s t", "android"]}},
+		{data: {tags: ["Programing", "android"]}},
 	] as any;
 	const allTags = await getAllTags(dummy);
 	expect(allTags).toEqual([
