@@ -1,4 +1,5 @@
 ---
+import { getLinkUrl } from "@/util/contents";
 import { cn } from "../util/cn";
 
 interface Props {
@@ -8,23 +9,25 @@ interface Props {
 
 const { label, url } = Astro.props;
 ---
-{url ? (
-  <a
-    href={url}
-    class={cn(
-      "flex items-center",
-      "px-2 py-1",
-      "bg-amber-500",
-      "rounded-sm",
-    )}
-  >{label}</a>
-) : (
-   <span
-     class={cn(
-       "flex items-center",
-       "px-2 py-1",
-       "bg-gray-300",
-       "rounded-t-xs",
-     )}
-   >{label}</span>
- )}
+
+{
+  url ? (
+    <a
+      href={getLinkUrl(url)}
+      class={cn("flex items-center", "px-2 py-1", "bg-amber-500", "rounded-sm")}
+    >
+      {label}
+    </a>
+  ) : (
+    <span
+      class={cn(
+        "flex items-center",
+        "px-2 py-1",
+        "bg-gray-300",
+        "rounded-t-xs",
+      )}
+    >
+      {label}
+    </span>
+  )
+}

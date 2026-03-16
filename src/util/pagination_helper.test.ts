@@ -39,23 +39,23 @@ describe("PaginationLink()", () => {
       size: 5,
       lastPage: 40,
       url: {
-        current: "./6",
-        prev: "./5",
-        next: "./7",
+        current: "/6",
+        prev: "/5",
+        next: "/7",
         first: undefined,
-        last: "./40",
+        last: "/40",
       },
     };
     expect(makePaginationLink({ page })).toEqual([
       { label: "1", url: "/", isActive: false },
       { label: "...", url: undefined, isActive: false },
-      { label: "4", url: "./4", isActive: false },
-      { label: "5", url: "./5", isActive: false },
+      { label: "4", url: "/4/", isActive: false },
+      { label: "5", url: "/5/", isActive: false },
       { label: "6", url: undefined, isActive: true },
-      { label: "7", url: "./7", isActive: false },
-      { label: "8", url: "./8", isActive: false },
+      { label: "7", url: "/7/", isActive: false },
+      { label: "8", url: "/8/", isActive: false },
       { label: "...", url: undefined, isActive: false },
-      { label: "40", url: "./40", isActive: false },
+      { label: "40", url: "/40/", isActive: false },
     ]);
   });
 
@@ -69,20 +69,20 @@ describe("PaginationLink()", () => {
       size: 10,
       lastPage: 7,
       url: {
-        current: "./2",
+        current: "/2",
         prev: "/",
-        next: "./3",
+        next: "/3",
         first: "/",
-        last: "./7",
+        last: "/7",
       },
     };
     expect(makePaginationLink({ page, num: 3 })).toEqual([
       { label: "1", url: "/", isActive: false },
       { label: "2", url: undefined, isActive: true },
-      { label: "3", url: "./3", isActive: false },
-      { label: "4", url: "./4", isActive: false },
+      { label: "3", url: "/3/", isActive: false },
+      { label: "4", url: "/4/", isActive: false },
       { label: "...", url: undefined, isActive: false },
-      { label: "7", url: "./7", isActive: false },
+      { label: "7", url: "/7/", isActive: false },
     ]);
   });
 
@@ -96,20 +96,20 @@ describe("PaginationLink()", () => {
       size: 10,
       lastPage: 7,
       url: {
-        current: "./6",
-        prev: "./5",
-        next: "./7",
+        current: "/6",
+        prev: "/5",
+        next: "/7",
         first: "/",
-        last: "./7",
+        last: "/7",
       },
     };
     expect(makePaginationLink({ page, num: 3 })).toEqual([
       { label: "1", url: "/", isActive: false },
       { label: "...", url: undefined, isActive: false },
-      { label: "4", url: "./4", isActive: false },
-      { label: "5", url: "./5", isActive: false },
+      { label: "4", url: "/4/", isActive: false },
+      { label: "5", url: "/5/", isActive: false },
       { label: "6", url: undefined, isActive: true },
-      { label: "7", url: "./7", isActive: false },
+      { label: "7", url: "/7/", isActive: false },
     ]);
   });
 
@@ -123,18 +123,18 @@ describe("PaginationLink()", () => {
       size: 10,
       lastPage: 4,
       url: {
-        current: "./3",
-        prev: "./2",
-        next: "./4",
+        current: "/3",
+        prev: "/2",
+        next: "/4",
         first: "/",
-        last: "./4",
+        last: "/4",
       },
     };
     expect(makePaginationLink({ page, num: 3 })).toEqual([
       { label: "1", url: "/", isActive: false },
-      { label: "2", url: "./2", isActive: false },
+      { label: "2", url: "/2/", isActive: false },
       { label: "3", url: undefined, isActive: true },
-      { label: "4", url: "./4", isActive: false },
+      { label: "4", url: "/4/", isActive: false },
     ]);
   });
 });

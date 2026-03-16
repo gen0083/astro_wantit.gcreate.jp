@@ -38,3 +38,13 @@ export const getCollectionEntryPost = async (): Promise<
     };
   });
 };
+
+/**
+ * urlを取得する（末尾のスラッシュを必ずつけるように返す）
+ * @param slug 記事のリンク先
+ * @returns 先頭と末尾にスラッシュを必ずつけたurl
+ */
+export const getLinkUrl = (slug: string) => {
+  const start = slug.startsWith('/') ? slug : `/${slug}`;
+  return start.endsWith('/') ? start : `${start}/`;
+};

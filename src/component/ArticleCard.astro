@@ -1,8 +1,7 @@
 ---
 import { getCoverImage } from "@/constants/coverImage";
-import type { CollectionEntryPost } from "@/util/contents";
+import { getLinkUrl, type CollectionEntryPost } from "@/util/contents";
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
 import { cn } from "../util/cn";
 import ArticleSummary from "./ArticleSummary.astro";
 
@@ -14,6 +13,7 @@ const { post } = Astro.props;
 
 const imagePath = getCoverImage(post.category);
 ---
+
 <article
   class={cn(
     "relative group p-4 flex flex-col gap-3",
@@ -27,15 +27,16 @@ const imagePath = getCoverImage(post.category);
   </div>
   <h2 class="text-xl font-bold leading-tight">
     <a
-      href={post.data.slug || post.id}
-      class="after:absolute after:inset-0"
-    >{post.data.title}</a>
+      href={getLinkUrl(post.data.slug ?? post.id)}
+      class="after:absolute after:inset-0">{post.data.title}</a
+    >
   </h2>
   <ArticleSummary post={post} />
   <footer class="flex">
     <time
       datetime={post.data.date.toISOString()}
       class="text-sm text-gray-500 ml-auto"
-    >{post.data.date.toLocaleString("ja-JP")}</time>
+      >{post.data.date.toLocaleString("ja-JP")}</time
+    >
   </footer>
 </article>

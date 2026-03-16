@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   getCollectionEntryPost,
+  getLinkUrl,
   getSummary,
   toParagraphs,
 } from "./contents";
@@ -83,5 +84,17 @@ describe("getCollectionEntryPost", () => {
       // カテゴリに文字列がちゃんと設定されているか
       expect(post.category.trim().length).toBeGreaterThan(0);
     });
+  });
+});
+
+describe("getLinkUrl", () => {
+  it("urlを渡すと/を含めたURLを返す", () => {
+    expect(getLinkUrl("hoge")).toEqual("/hoge/");
+  });
+  it("先頭に/がついているときに重複してつけない", () => {
+    expect(getLinkUrl("/hoge")).toEqual("/hoge/");
+  });
+  it("末尾に/がついているときに重複してつけない", () => {
+    expect(getLinkUrl("hoge/")).toEqual("/hoge/");
   });
 });

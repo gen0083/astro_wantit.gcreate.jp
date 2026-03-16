@@ -13,9 +13,11 @@ const pagination = makePaginationLink({ page, num });
 ---
 
 <ul class="flex list-none justify-center gap-2">
-  {pagination.map((page) => (
-    <li class="flex">
-      <LinkButton {...page} />
-    </li>
-  ))}
+  {
+    pagination.map((page) => (
+      <li class="flex">
+        <LinkButton {...page} />
+      </li>
+    ))
+  }
 </ul>

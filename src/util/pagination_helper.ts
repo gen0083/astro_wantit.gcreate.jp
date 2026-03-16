@@ -49,7 +49,7 @@ export const makePaginationLink = (
   return pages.map((i) => {
     const label = i == ELLIPSE ? ELLIPSE_STRING : `${i}`;
     // 1ページめは'/'になる
-    const url = i == 1 ? "/" : `./${i}`;
+    const url = i == 1 ? "/" : `/${i}/`;
     return {
       label: label,
       // elilipseもしくはcurrentPageはリンクしない
