@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getAllTags } from "@/util/contents";
+import { getAllTags } from "@/util/tags";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = async () => {
@@ -15,10 +15,15 @@ export const getStaticPaths = async () => {
 
 const tags = getAllTags(await getCollection("post"));
 ---
+
 <BaseLayout pageTitle="タグ一覧">
-  {tags.map((tag) => (
-    <div>
-      <p><a href={`/tags/${tag.url}/`}>{tag.display}</a></p>
-    </div>
-  ))}
+  {
+    tags.map((tag) => (
+      <div>
+        <p>
+          <a href={`/tags/${tag.url}/`}>{tag.display}</a>
+        </p>
+      </div>
+    ))
+  }
 </BaseLayout>
