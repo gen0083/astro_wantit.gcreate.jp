@@ -1,0 +1,20 @@
+/* Typography (prose) 関連の独自カスタマイズ */
+
+.prose {
+  /* プラグイン内部のCSS変数を上書きして色を変更する例 */
+  --tw-prose-links: var(--color-brand-primary);
+}
+
+.prose h2 {
+  @apply border-b border-slate-200 pb-2 mb-4 mt-8;
+}
+
+/* tableと関連要素からproseのスタイルをリセットし、ブラウザのデフォルトに戻す */
+.prose table,
+.prose thead,
+.prose tbody,
+.prose tr,
+.prose th,
+.prose td {
+  all: revert;
+}

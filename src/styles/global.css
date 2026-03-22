@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@import "./prose.css";
 
 @theme {
   /* プロジェクト独自のテーマ変数（カラー、フォントなど）をここに定義します */
