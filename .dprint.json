@@ -1,10 +1,17 @@
 {
   "typescript": {
+    "lineWidth": 120,
     "preferSingleLine": false,
     "indentWidth": 2,
     "useTabs": false,
     "quoteStyle": "preferSingle",
     "ensureNewLineAtEndOfFile": true
+  },
+  "markup": {
+    "printWidth": 120,
+    "indentWidth": 2,
+    "useTabs": false,
+    "closingBracketSameLine": true
   },
   "excludes": [
     "**/node_modules",

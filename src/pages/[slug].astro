@@ -37,19 +37,19 @@ if (!lastModDate && post.filePath) {
       <div class="flex flex-row">
         <ul>
           <li>
-            Posted <time datetime={post.data.date.toISOString()}
-              >{post.data.date.toLocaleDateString()}</time
-            >
+            Posted <time datetime={post.data.date.toISOString()}>
+              {post.data.date.toLocaleDateString()}
+            </time>
           </li>
 
           {
             lastModDate && (
-              <span>
-                / Updated{" "}
+              <li>
+                Updated
                 <time datetime={lastModDate.toISOString()}>
                   {lastModDate.toLocaleDateString()}
                 </time>
-              </span>
+              </li>
             )
           }
         </ul>
@@ -57,7 +57,7 @@ if (!lastModDate && post.filePath) {
           {
             tags?.map((tag) => (
               <li>
-                <a href={getLinkUrl(`/tag/${tag.url}`)}>{tag.display}</a>
+                <a href={getLinkUrl(`/tags/${tag.url}`)}>{tag.display}</a>
               </li>
             ))
           }
