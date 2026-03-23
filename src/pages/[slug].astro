@@ -1,9 +1,8 @@
 ---
-import { checkSlugIsUnique } from "@/util/check";
 import { getCollectionEntryPost } from "@/util/contents";
 import { render } from "astro:content";
-import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import fs from "node:fs";
 
 export async function getStaticPaths() {
   const allPosts = await getCollectionEntryPost();
@@ -22,11 +21,35 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+// frontmatterのlastmodがあればそれを使用し、なければファイルの実際の更新日時(mtime)を取得
+let lastModDate = post.data.lastmod;
+if (!lastModDate && post.filePath) {
+  const stats = fs.statSync(post.filePath);
+  lastModDate = stats.mtime;
+}
 ---
 
 <BaseLayout pageTitle={post.data.title}>
   <article class="prose prose-slate">
-    <h1>{post.data.title}</h1>
+    <header>
+      <h1>{post.data.title}</h1>
+      <p>
+        Posted <time datetime={post.data.date.toISOString()}
+          >{post.data.date.toLocaleDateString()}</time
+        >
+        {
+          lastModDate && (
+            <span>
+              / Updated{" "}
+              <time datetime={lastModDate.toISOString()}>
+                {lastModDate.toLocaleDateString()}
+              </time>
+            </span>
+          )
+        }
+      </p>
+    </header>
     <div>
       <Content />
     </div>
