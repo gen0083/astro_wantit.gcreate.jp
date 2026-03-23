@@ -22,3 +22,12 @@
 .prose p {
   text-indent: 1em;
 }
+
+/* amazon-af-link を含む p タグは字下げを無効化する */
+.prose p:has(.amazon-af-link) {
+  text-indent: 0;
+}
+
+.prose .amazon-af-link {
+  @apply inline-block px-8 py-3 text-base font-bold text-white no-underline bg-amber-500 rounded-full shadow-md transition-all duration-300 hover:bg-amber-600 hover:shadow-lg hover:-translate-y-1 hover:text-white;
+}
