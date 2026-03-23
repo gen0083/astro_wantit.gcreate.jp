@@ -97,4 +97,10 @@ describe("getLinkUrl", () => {
   it("末尾に/がついているときに重複してつけない", () => {
     expect(getLinkUrl("hoge/")).toEqual("/hoge/");
   });
+  it("階層のある相対パスが渡された場合も先頭と末尾に/をつけて返す", () => {
+    expect(getLinkUrl("hoge/fuga")).toEqual("/hoge/fuga/");
+  });
+  it("./から始まる相対パスが渡された場合も先頭と末尾に/をつけて返す", () => {
+    expect(getLinkUrl("./hoge")).toEqual("/./hoge/");
+  });
 });
