@@ -60,10 +60,15 @@ export const getCollectionEntryPost = async (): Promise<
 /**
  * urlを取得する。
  * 渡された文字列の先頭と末尾に `/` が必ずつくように整形して返す。（既に付いている場合は重複して付けない）
+ * ※注意: `./` や `../` を含む相対パスの解決は行いません。ルートからのパス（またはslug）を渡してください。
  * @param slug 記事のリンク先となる文字列
  * @returns 先頭と末尾にスラッシュが付加されたURL文字列
+ * @throws {Error} 相対パス指定子（`./` または `../`）が含まれている場合
  */
 export const getLinkUrl = (slug: string) => {
+  if (slug.includes('./') || slug.includes('../')) {
+    throw new Error(`getLinkUrlには相対パスを渡せません: ${slug}`);
+  }
   const start = slug.startsWith('/') ? slug : `/${slug}`;
   return start.endsWith('/') ? start : `${start}/`;
 };

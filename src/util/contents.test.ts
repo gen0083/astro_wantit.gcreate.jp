@@ -100,7 +100,9 @@ describe("getLinkUrl", () => {
   it("階層のある相対パスが渡された場合も先頭と末尾に/をつけて返す", () => {
     expect(getLinkUrl("hoge/fuga")).toEqual("/hoge/fuga/");
   });
-  it("./から始まる相対パスが渡された場合も先頭と末尾に/をつけて返す", () => {
-    expect(getLinkUrl("./hoge")).toEqual("/./hoge/");
+  it("./や../を含むパスが渡された場合はエラーを投げる", () => {
+    expect(() => getLinkUrl("./hoge")).toThrowError();
+    expect(() => getLinkUrl("../hoge")).toThrowError();
+    expect(() => getLinkUrl("hoge/../fuga")).toThrowError();
   });
 });
