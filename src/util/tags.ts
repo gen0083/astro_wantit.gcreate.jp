@@ -29,10 +29,10 @@ export const getAllTags = (
 /**
  * 記事単体のタグ情報のTagInformationを返す。
  * @param post 記事単体のデータ
- * @returns tag情報、タグ情報が設定されていない場合undefined
+ * @returns tag情報の配列。タグ情報が設定されていない場合は空配列を返す。
  */
-export const getPostTags = (post: CollectionEntry<"post">): TagInformation[] | undefined => {
-	return post.data.tags?.map((tag) => {
+export const getPostTags = (post: CollectionEntry<"post">): TagInformation[] => {
+	return (post.data.tags ?? []).map((tag) => {
 		const info = normalizeTag(tag);
 		return {
 			origin: tag,

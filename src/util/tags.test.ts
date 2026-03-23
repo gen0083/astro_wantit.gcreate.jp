@@ -67,10 +67,10 @@ describe("getPostTags", () => {
     ]);
   });
 
-  it("タグが設定されていない場合、undefinedを返す", () => {
+  it("タグが設定されていない場合、空配列を返す", () => {
     const post = { data: {} } as any;
     const result = getPostTags(post);
-    expect(result).toBeUndefined();
+    expect(result).toEqual([]);
   });
 
   it("タグが空配列の場合、空配列を返す", () => {
