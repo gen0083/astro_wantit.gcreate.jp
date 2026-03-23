@@ -1,8 +1,13 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { checkSlugIsUnique } from "./check";
 import { splitCategoryAndSlugFromPostId } from "./url";
-import type { TagInformation } from "@/constants/types";
 
+/**
+ * 改行コードで区切られた文字列を段落ごとの配列に分割する。
+ * 前後や途中の無駄な改行（空行）は無視される。
+ * @param text 分割元の文字列
+ * @returns 余分な空白や空行を取り除いた段落の配列
+ */
 export const toParagraphs = (text: string): string[] => {
   return text
     .split("\n")
@@ -10,6 +15,14 @@ export const toParagraphs = (text: string): string[] => {
     .filter((p) => p != "");
 };
 
+/**
+ * 記事のサマリー（概要）を取得する。
+ * 1. frontmatter の `description` が設定されていればそれを最優先して返す。
+ * 2. 本文中に `<!-- more -->` コメントがある場合は、その前までの内容を返す（空白や改行を含んでいても取得可能）。
+ * 3. どちらもない場合は、本文の先頭100文字を返す。
+ * @param post 記事データ
+ * @returns サマリー文字列
+ */
 export const getSummary = (post: CollectionEntry<"post">): string => {
   const description = post.data.description;
   if (description) return description;
@@ -25,6 +38,11 @@ export type CollectionEntryPost = CollectionEntry<"post"> & {
   category: string;
 };
 
+/**
+ * 全記事（post）を取得し、ファイルパスからカテゴリ情報を付与して返す。
+ * 取得時に、すべての記事で slug に重複がないかのバリデーションを実行する。
+ * @returns カテゴリ情報が付与された記事データの配列
+ */
 export const getCollectionEntryPost = async (): Promise<
   CollectionEntryPost[]
 > => {
@@ -40,9 +58,10 @@ export const getCollectionEntryPost = async (): Promise<
 };
 
 /**
- * urlを取得する（末尾のスラッシュを必ずつけるように返す）
- * @param slug 記事のリンク先
- * @returns 先頭と末尾にスラッシュを必ずつけたurl
+ * urlを取得する。
+ * 渡された文字列の先頭と末尾に `/` が必ずつくように整形して返す。（既に付いている場合は重複して付けない）
+ * @param slug 記事のリンク先となる文字列
+ * @returns 先頭と末尾にスラッシュが付加されたURL文字列
  */
 export const getLinkUrl = (slug: string) => {
   const start = slug.startsWith('/') ? slug : `/${slug}`;
