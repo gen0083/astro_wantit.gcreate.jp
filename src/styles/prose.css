@@ -18,3 +18,7 @@
 .prose td {
   all: revert;
 }
+
+.prose p {
+  text-indent: 1em;
+}
