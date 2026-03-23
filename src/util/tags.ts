@@ -26,6 +26,22 @@ export const getAllTags = (
 	return [...uniqueTags.values()];
 };
 
+/**
+ * 記事単体のタグ情報のTagInformationを返す。
+ * @param post 記事単体のデータ
+ * @returns tag情報、タグ情報が設定されていない場合undefined
+ */
+export const getPostTags = (post: CollectionEntry<"post">): TagInformation[] | undefined => {
+	return post.data.tags?.map((tag) => {
+		const info = normalizeTag(tag);
+		return {
+			origin: tag,
+			display: info.display,
+			url: info.url,
+		};
+	});
+}
+
 export const normalizeTag = (rawTag: string): TagInformation => {
 	const trimed = rawTag.trim();
 	const display = trimed.normalize('NFKC');
