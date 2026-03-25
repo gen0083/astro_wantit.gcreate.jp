@@ -34,8 +34,8 @@ if (!lastModDate && post.filePath) {
   <article class="prose prose-slate">
     <header>
       <h1>{post.data.title}</h1>
-      <div class="flex flex-row">
-        <ul>
+      <div class="flex flex-row justify-between items-center">
+        <ul class="list-none gap-2">
           <li>
             Posted <time datetime={post.data.date.toISOString()}>
               {post.data.date.toLocaleDateString()}
@@ -53,7 +53,7 @@ if (!lastModDate && post.filePath) {
             )
           }
         </ul>
-        <ul class="flex flex-row">
+        <ul class="flex flex-row gap-2 list-none">
           {
             tags?.map((tag) => (
               <li>
