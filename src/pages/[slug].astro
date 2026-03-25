@@ -35,7 +35,7 @@ if (!lastModDate && post.filePath) {
     <header>
       <h1>{post.data.title}</h1>
       <div class="flex flex-row justify-between items-center">
-        <ul class="list-none gap-2">
+        <ul class="list-none gap-2 text-sm">
           <li>
             Posted <time datetime={post.data.date.toISOString()}>
               {post.data.date.toLocaleDateString()}
