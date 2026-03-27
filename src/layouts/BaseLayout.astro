@@ -17,7 +17,7 @@ const { pageTitle = "イイモノ", layoutType = "default" } = Astro.props;
     <title>{pageTitle}{layoutType === "post" ? " - イイモノ -" : ""}</title>
   </head>
   <body class="min-h-dvh flex flex-col">
-    <header class="w-full max-w-3xl mx-auto px-6 pt-8">
+    <header class="w-full max-w-3xl mx-auto px-6 py-8">
       {
         layoutType === "list" ? (
           <h1 class="text-2xl font-bold tracking-tight">
@@ -34,7 +34,7 @@ const { pageTitle = "イイモノ", layoutType = "default" } = Astro.props;
         )
       }
     </header>
-    <main class="flex-1 w-full max-w-3xl mx-auto px-6 py-14">
+    <main class="flex-1 w-full max-w-3xl mx-auto gap-8">
       <slot />
     </main>
     <GlobalFooter />

@@ -12,7 +12,7 @@ const { page, num } = Astro.props;
 const pagination = makePaginationLink({ page, num });
 ---
 
-<ul class="flex list-none justify-center gap-2">
+<ul class="flex list-none justify-center gap-2 pb-8">
   {
     pagination.map((page) => (
       <li class="flex">
