@@ -1,7 +1,11 @@
 ---
 import GlobalFooter from "@/component/GlobalFooter.astro";
 import "../styles/global.css";
-const { pageTitle } = Astro.props;
+interface Props {
+  pageTitle?: string;
+  layoutType?: "default" | "post" | "list";
+}
+const { pageTitle = "イイモノ", layoutType = "default" } = Astro.props;
 ---
 
 <html lang="ja">
@@ -13,6 +17,23 @@ const { pageTitle } = Astro.props;
     <title>{pageTitle}</title>
   </head>
   <body class="min-h-dvh flex flex-col">
+    <header class="w-full max-w-3xl mx-auto px-6 pt-8">
+      {
+        layoutType === "list" ? (
+          <h1 class="text-2xl font-bold tracking-tight">
+            <a href="/" class="text-slate-900 no-underline">
+              イイモノ
+            </a>
+          </h1>
+        ) : (
+          <div class="text-2xl font-bold tracking-tight">
+            <a href="/" class="text-slate-900 no-underline">
+              イイモノ
+            </a>
+          </div>
+        )
+      }
+    </header>
     <main class="flex-1 w-full max-w-3xl mx-auto px-6 py-14">
       <slot />
     </main>

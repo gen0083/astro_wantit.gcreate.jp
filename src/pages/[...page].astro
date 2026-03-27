@@ -22,7 +22,7 @@ const pageTitle =
     : `イイモノ - ${page.currentPage}ページ目 -`;
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle} layoutType="list">
   <ul class="flex flex-col gap-6 max-w-2xl mx-auto">
     {
       page.data.map((post) => (
