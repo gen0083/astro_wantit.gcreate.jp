@@ -15,19 +15,22 @@ export const getStaticPaths = (async ({ paginate }) => {
   return paginate(sortedPosts, { pageSize: 10 });
 }) satisfies GetStaticPaths;
 
-const pageTitle = "トップページ";
 const { page } = Astro.props;
+const pageTitle =
+  page.currentPage === 1
+    ? "イイモノ"
+    : `イイモノ - ${page.currentPage}ページ目 -`;
 ---
 
 <BaseLayout pageTitle={pageTitle}>
   <ul class="flex flex-col gap-6 max-w-2xl mx-auto">
-    {page.data.map((post) => {
-      return (
+    {
+      page.data.map((post) => (
         <li>
           <ArticleCard post={post} />
         </li>
-      );
-    })}
+      ))
+    }
   </ul>
   <PaginationLink page={page} />
 </BaseLayout>
