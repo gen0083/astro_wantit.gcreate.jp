@@ -9,7 +9,6 @@ export async function getStaticPaths() {
   const allPosts = await getCollectionEntryPost();
   return allPosts.map((post) => {
     // frontmatterのslugフィールドを優先的に使用、なければpost.slugを使用
-    console.log(`id=${post.id} / slug:${post.data.slug}`);
     if (!post.data.slug) {
       console.log("slugが指定されていません");
     }
