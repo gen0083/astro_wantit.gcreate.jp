@@ -81,6 +81,12 @@ const imagePath = getCoverImage(post.category);
         </ul>
       </div>
       <Image src={imagePath} alt={`${post.category} image`} />
+      <div>
+        {post.data.product?.name && <p>{post.data.product.name}</p>}
+        {post.data.product?.number && <p>{post.data.product.number}</p>}
+        {post.data.product?.rate && <p>{post.data.product.rate}</p>}
+        {post.data.product?.comment && <p>{post.data.product.comment}</p>}
+      </div>
     </header>
     <div>
       <Content />
