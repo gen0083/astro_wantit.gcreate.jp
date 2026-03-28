@@ -18,5 +18,7 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout pageTitle={post.data.title} layoutType="post">
-  <Content />
+  <div class="prose prose-slate py-4">
+    <Content />
+  </div>
 </BaseLayout>
