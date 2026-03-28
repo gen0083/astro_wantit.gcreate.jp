@@ -6,6 +6,7 @@ import fs from "node:fs";
 import { getPostTags } from "@/util/tags";
 import { getCoverImage } from "@/constants/coverImage";
 import { Image } from "astro:assets";
+import StarRating from "@/components/StarRating.astro";
 
 export async function getStaticPaths() {
   const allPosts = await getCollectionEntryPost();
@@ -84,7 +85,16 @@ const imagePath = getCoverImage(post.category);
       <div>
         {post.data.product?.name && <p>{post.data.product.name}</p>}
         {post.data.product?.number && <p>{post.data.product.number}</p>}
-        {post.data.product?.rate && <p>{post.data.product.rate}</p>}
+        {
+          typeof post.data.product?.rate === "number" && (
+            <div class="flex items-center gap-2 mb-2">
+              <StarRating rate={post.data.product.rate} />
+              <span class="text-sm text-slate-600">
+                ({post.data.product.rate})
+              </span>
+            </div>
+          )
+        }
         {post.data.product?.comment && <p>{post.data.product.comment}</p>}
       </div>
     </header>
