@@ -1,5 +1,5 @@
 ---
-import ArticleCard from "@/component/ArticleCard.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollectionEntryPost } from "@/util/contents";
 import { getAllTags } from "@/util/tags";
@@ -12,7 +12,7 @@ export const getStaticPaths = (async () => {
   // タグごとにフィルタされたpostの一覧を返す
   const filterdPosts = uniqueTags.map((tag) => {
     const filterd = allPosts.filter((post) =>
-      post.data.tags?.includes(tag.display)
+      post.data.tags?.includes(tag.display),
     );
     return {
       params: { tag: tag.url },
@@ -25,6 +25,7 @@ export const getStaticPaths = (async () => {
 const { tag } = Astro.params;
 const { pages, title } = Astro.props;
 ---
+
 <BaseLayout pageTitle={title}>
   {pages.map((post) => <ArticleCard post={post} />)}
 </BaseLayout>

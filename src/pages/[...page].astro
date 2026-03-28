@@ -3,8 +3,8 @@ import { getCollectionEntryPost } from "@/util/contents";
 import { splitCategoryAndSlugFromPostId } from "@/util/url";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import ArticleCard from "../component/ArticleCard.astro";
-import PaginationLink from "../component/PaginationLink.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
+import PaginationLink from "@/components/PaginationLink.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
