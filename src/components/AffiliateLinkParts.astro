@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"post">;
+}
+const { post }: Props = Astro.props;
+const amazonLinkBody = `Amazonで「${
+  post.data.product?.name
+    ? post.data.product.name
+    : post.data.product?.number
+      ? post.data.product?.number
+      : "商品"
+}」を確認する`;
+---
+
+<div class="border-slate-600 border rounded-2xl gap-4 flex flex-col p-4">
+  {post.data.product?.kaeyome && <div set:html={post.data.product.kaeyome} />}
+  {post.data.product?.amazon && <div><a href={post.data.product.amazon}>{amazonLinkBody}</a></div>}
+  {post.data.product?.rakuten && <div set:html={post.data.product.rakuten} />}
+</div>
