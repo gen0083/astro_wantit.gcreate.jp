@@ -8,6 +8,7 @@ import { getCoverImage } from "@/constants/coverImage";
 import { Image } from "astro:assets";
 import StarRating from "@/components/StarRating.astro";
 import AffiliateLinkParts from "@/components/AffiliateLinkParts.astro";
+import { getPostFilePath } from "@/util/github";
 
 export async function getStaticPaths() {
   const allPosts = await getCollectionEntryPost();
@@ -101,6 +102,9 @@ const imagePath = getCoverImage(post.category);
     </header>
     <div>
       <Content />
+    </div>
+    <div>
+      <a href={getPostFilePath(post)}>記事の修正リクエストを送る</a>
     </div>
     <AffiliateLinkParts post={post} />
   </article>
