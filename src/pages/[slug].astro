@@ -103,8 +103,14 @@ const imagePath = getCoverImage(post.category);
     <div>
       <Content />
     </div>
-    <div>
-      <a href={getPostFilePath(post)}>記事の修正リクエストを送る</a>
+    <div class="mt-8">
+      <a
+        href={getPostFilePath(post)}
+        class="inline-flex items-center justify-center gap-2"
+      >
+        <img src="/github_logo.svg" alt="GitHub" class="w-5 h-5 m-0" />
+        <span>記事の修正リクエストを送る</span>
+      </a>
     </div>
     <AffiliateLinkParts post={post} />
   </article>
