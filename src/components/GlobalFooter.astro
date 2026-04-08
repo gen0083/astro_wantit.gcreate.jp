@@ -2,6 +2,7 @@
 import { getCollectionEntryPost, getLinkUrl } from "@/util/contents";
 import { getAllTags } from "@/util/tags";
 import { getCollection } from "astro:content";
+import { AUTHOR } from "@/constants/site";
 
 const solids = await getCollection("forsite");
 const allPosts = await getCollectionEntryPost();
@@ -10,7 +11,7 @@ const tags = getAllTags(allPosts);
 
 <footer class="bg-emerald-950 text-cyan-50">
   <p class="flex p-8 text-center justify-center">
-    Copyright© gen0083 2013-{new Date().getFullYear()} All Rights Reserved.
+    Copyright© {AUTHOR} 2013-{new Date().getFullYear()} All Rights Reserved.
   </p>
   <ul class="list-none flex gap-5 justify-center p-4">
     <li class="flex"><a href="/">HOME</a></li>

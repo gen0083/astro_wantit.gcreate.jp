@@ -1,5 +1,9 @@
 ---
-import { getCollectionEntryPost, getLinkUrl } from "@/util/contents";
+import {
+  getCollectionEntryPost,
+  getLinkUrl,
+  getSummary,
+} from "@/util/contents";
 import { render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import fs from "node:fs";
@@ -33,9 +37,14 @@ if (!lastModDate && post.filePath) {
   lastModDate = stats.mtime;
 }
 const imagePath = getCoverImage(post.category);
+const summary = getSummary(post);
 ---
 
-<BaseLayout pageTitle={post.data.title} layoutType="post">
+<BaseLayout
+  pageTitle={post.data.title}
+  pageDescription={summary}
+  layoutType="post"
+>
   <article class="prose prose-slate py-4">
     <header>
       <h1>{post.data.title}</h1>

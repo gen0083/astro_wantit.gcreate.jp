@@ -3,11 +3,17 @@ import GlobalFooter from "@/components/GlobalFooter.astro";
 import "../styles/global.css";
 import Analytics from "@/components/Analytics.astro";
 import AutoAdsense from "@/components/AutoAdsense.astro";
+import { SITE_DESCRIPTION } from "@/constants/site";
 interface Props {
   pageTitle?: string;
+  pageDescription?: string;
   layoutType?: "default" | "post" | "list";
 }
-const { pageTitle = "イイモノ", layoutType = "default" } = Astro.props;
+const {
+  pageTitle = "イイモノ",
+  pageDescription = SITE_DESCRIPTION,
+  layoutType = "default",
+} = Astro.props;
 ---
 
 <html lang="ja">
@@ -17,6 +23,7 @@ const { pageTitle = "イイモノ", layoutType = "default" } = Astro.props;
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}{layoutType === "post" ? " - イイモノ -" : ""}</title>
+    <meta name="description" content={pageDescription} />
     <Analytics />
     <AutoAdsense />
   </head>
