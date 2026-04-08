@@ -1,0 +1,31 @@
+---
+import { getCoverImage } from "@/constants/coverImage";
+import { SITE_TITLE } from "@/constants/site";
+import type { CollectionEntryPost } from "@/util/contents";
+import siteImage from "@assets/images/background.jpg";
+
+interface Props {
+  pageTitle: string;
+  pageDescription: string;
+  layoutType: "post" | "default" | "list";
+  post?: CollectionEntryPost;
+}
+const { pageTitle, pageDescription, layoutType, post } = Astro.props;
+const coverImage = new URL(
+  post ? getCoverImage(post.category).src : siteImage.src,
+  Astro.site, // https://から始まる絶対URLにする
+).href;
+---
+
+<!-- OGP / Twitter Card -->
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:locale" content="ja_JP" />
+<meta
+  property="og:type"
+  content={layoutType === "post" ? "article" : "website"}
+/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:image" content={coverImage} />
+<meta property="og:url" content={Astro.url.href} />

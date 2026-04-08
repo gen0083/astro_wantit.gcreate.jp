@@ -4,19 +4,23 @@ import "../styles/global.css";
 import Analytics from "@/components/Analytics.astro";
 import AutoAdsense from "@/components/AutoAdsense.astro";
 import { SITE_DESCRIPTION } from "@/constants/site";
+import OGP from "@/components/OGP.astro";
+import type { CollectionEntryPost } from "@/util/contents";
 interface Props {
   pageTitle?: string;
   pageDescription?: string;
   layoutType?: "default" | "post" | "list";
+  post?: CollectionEntryPost;
 }
 const {
   pageTitle = "イイモノ",
   pageDescription = SITE_DESCRIPTION,
   layoutType = "default",
+  post,
 } = Astro.props;
 ---
 
-<html lang="ja">
+<html lang="ja" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -24,6 +28,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}{layoutType === "post" ? " - イイモノ -" : ""}</title>
     <meta name="description" content={pageDescription} />
+    <OGP {pageTitle} {pageDescription} {layoutType} {post} />
     <Analytics />
     <AutoAdsense />
   </head>
