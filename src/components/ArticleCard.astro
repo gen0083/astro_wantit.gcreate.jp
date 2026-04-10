@@ -14,14 +14,7 @@ const { post } = Astro.props;
 const imagePath = getCoverImage(post.category);
 ---
 
-<article
-  class={cn(
-    "relative group flex flex-col gap-3",
-    "bg-white border border-gray-200 rounded-xl overflow-hidden",
-    "shadow-sm hover:shadow-md transition-shadow duration-300",
-    "hover:shadow-lg",
-  )}
->
+<article class="card">
   <div class="aspect-video w-full overflow-hidden">
     <Image src={imagePath} alt={`${post.category} image`} />
   </div>

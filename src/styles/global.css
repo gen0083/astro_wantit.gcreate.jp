@@ -14,3 +14,11 @@
     color: var(--color-slate-900);
   }
 }
+
+@layer components {
+  .card {
+    @apply relative flex flex-col gap-3;
+    @apply bg-white border border-gray-200 rounded-xl overflow-hidden;
+    @apply shadow-sm hover:shadow-md transition-shadow duration-300 hover:shadow-lg;
+  }
+}
