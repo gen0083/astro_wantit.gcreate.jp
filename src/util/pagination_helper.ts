@@ -12,6 +12,9 @@ export interface PaginationPage {
 const ELLIPSE = -1;
 const ELLIPSE_STRING = "...";
 
+
+// 注意：Page<any>のデータが現在ページが最初のページならfirst: undefined, それ以外ならfirst: baseUrlであることを前提とした処理になっている
+
 export const makePaginationLink = (
   { page, num = 5 }: { page: Page<any>; num?: number },
 ): PaginationPage[] => {

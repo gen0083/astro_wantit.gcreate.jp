@@ -39,11 +39,11 @@ describe("PaginationLink()", () => {
       size: 5,
       lastPage: 40,
       url: {
-        current: "/6",
-        prev: "/5",
-        next: "/7",
-        first: undefined,
-        last: "/40",
+        current: "/6/",
+        prev: "/5/",
+        next: "/7/",
+        first: "/",
+        last: "/40/",
       },
     };
     expect(makePaginationLink({ page })).toEqual([
@@ -69,11 +69,11 @@ describe("PaginationLink()", () => {
       size: 10,
       lastPage: 7,
       url: {
-        current: "/2",
+        current: "/2/",
         prev: "/",
-        next: "/3",
+        next: "/3/",
         first: "/",
-        last: "/7",
+        last: "/7/",
       },
     };
     expect(makePaginationLink({ page, num: 3 })).toEqual([
@@ -123,11 +123,11 @@ describe("PaginationLink()", () => {
       size: 10,
       lastPage: 4,
       url: {
-        current: "/3",
-        prev: "/2",
-        next: "/4",
+        current: "/3/",
+        prev: "/2/",
+        next: "/4/",
         first: "/",
-        last: "/4",
+        last: "/4/",
       },
     };
     expect(makePaginationLink({ page, num: 3 })).toEqual([
@@ -135,6 +135,56 @@ describe("PaginationLink()", () => {
       { label: "2", url: "/2/", isActive: false },
       { label: "3", url: undefined, isActive: true },
       { label: "4", url: "/4/", isActive: false },
+    ]);
+  });
+
+  it("タグページでページネーションを呼び出した場合", () => {
+    const page = {
+      data: [1, 2, 3, 4],
+      start: 1,
+      end: 4,
+      total: 44,
+      currentPage: 3,
+      size: 10,
+      lastPage: 4,
+      url: {
+        current: "/tags/tag/3",
+        prev: "/tags/tag/2",
+        next: "/tags/tag/4",
+        first: "/tags/tag/",
+        last: undefined,
+      },
+    };
+    expect(makePaginationLink({ page, num: 3 })).toEqual([
+      { label: "1", url: "/tags/tag/", isActive: false },
+      { label: "2", url: "/tags/tag/2/", isActive: false },
+      { label: "3", url: undefined, isActive: true },
+      { label: "4", url: "/tags/tag/4/", isActive: false },
+    ]);
+  });
+
+  it("タグページの1ページ目でページネーションを呼び出した場合", () => {
+    const page = {
+      data: [1, 2, 3, 4],
+      start: 1,
+      end: 4,
+      total: 44,
+      currentPage: 1,
+      size: 10,
+      lastPage: 4,
+      url: {
+        current: "/tags/tag/",
+        prev: undefined,
+        next: "/tags/tag/4",
+        first: undefined,
+        last: undefined,
+      },
+    };
+    expect(makePaginationLink({ page, num: 3 })).toEqual([
+      { label: "1", url: undefined, isActive: true },
+      { label: "2", url: "/tags/tag/2/", isActive: false },
+      { label: "3", url: "/tags/tag/3/", isActive: false },
+      { label: "4", url: "/tags/tag/4/", isActive: false },
     ]);
   });
 });
