@@ -1,5 +1,6 @@
 import type { Page } from "astro";
 import { range } from "./range";
+import { getLinkUrl } from "./contents";
 
 export interface PaginationPage {
   label: string;
@@ -48,12 +49,14 @@ export const makePaginationLink = (
 
   return pages.map((i) => {
     const label = i == ELLIPSE ? ELLIPSE_STRING : `${i}`;
+    // baseをcurrent もしくは firstにする（自身がfirstのURLならfistがundefinedなため）
+    const baseUrl = page.url.first ? page.url.first : page.url.current;
     // 1ページめは'/'になる
-    const url = i == 1 ? "/" : `/${i}/`;
+    const url = i == 1 ? baseUrl : `${baseUrl}${i}`;
     return {
       label: label,
       // elilipseもしくはcurrentPageはリンクしない
-      url: i != page.currentPage && i != ELLIPSE ? url : undefined,
+      url: i != page.currentPage && i != ELLIPSE ? getLinkUrl(url) : undefined,
       isActive: i == page.currentPage,
     };
   });
