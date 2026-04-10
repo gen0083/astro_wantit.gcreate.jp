@@ -9,6 +9,7 @@ const solids = await getCollection("forsite");
 <footer class="bg-emerald-950 text-cyan-50 flex flex-col gap-8 p-8">
   <ul class="list-none flex gap-5 justify-center">
     <li class="flex"><a href="/">HOME</a></li>
+    <li class="flex"><a href="/tags/">タグ一覧</a></li>
     {
       solids.map((post) => (
         <li class="flex">
