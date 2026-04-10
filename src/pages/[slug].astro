@@ -50,7 +50,7 @@ const summary = getSummary(post);
     <header>
       <h1>{post.data.title}</h1>
       <div class="flex flex-row justify-between items-center">
-        <ul class="list-none gap-2 text-sm">
+        <ul class="list-none gap-2 text-sm px-0 mx-0">
           <li>
             Posted <time datetime={post.data.date.toISOString()}>
               {
@@ -78,7 +78,7 @@ const summary = getSummary(post);
             )
           }
         </ul>
-        <ul class="flex flex-row gap-2 list-none">
+        <ul class="flex flex-wrap gap-2 list-none">
           {
             tags?.map((tag) => (
               <li>
