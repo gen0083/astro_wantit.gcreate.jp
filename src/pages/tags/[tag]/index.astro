@@ -11,9 +11,9 @@ export const getStaticPaths = (async () => {
   const uniqueTags = getAllTags(allPosts);
   // タグごとにフィルタされたpostの一覧を返す
   const filterdPosts = uniqueTags.map((tag) => {
-    const filterd = allPosts.filter((post) =>
-      post.data.tags?.includes(tag.display),
-    );
+    const filterd = allPosts
+      .filter((post) => post.data.tags?.includes(tag.display))
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     return {
       params: { tag: tag.url },
       props: { pages: filterd, title: tag.display },
