@@ -53,6 +53,21 @@ describe("getAllTags", () => {
 		{origin: "Android", display: "Android", url: "android", count: 2},
 	]);
   });
+  it("タグの出現回数(count)が正しく集計されること", async () => {
+    const dummy = [
+      { data: { tags: ["A", "B"] } },
+      { data: { tags: ["A", "C"] } },
+      { data: { tags: ["A", "B"] } },
+      { data: { tags: ["D"] } },
+    ] as any;
+    const allTags = await getAllTags(dummy);
+    expect(allTags).toEqual([
+      { origin: "A", display: "A", url: "a", count: 3 },
+      { origin: "B", display: "B", url: "b", count: 2 },
+      { origin: "C", display: "C", url: "c", count: 1 },
+      { origin: "D", display: "D", url: "d", count: 1 },
+    ]);
+  });
 });
 
 describe("getPostTags", () => {
