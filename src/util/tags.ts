@@ -4,6 +4,7 @@ export type TagInformation = {
   origin: string;
   display: string;
   url: string;
+  count: number;
 };
 
 /**
@@ -18,7 +19,10 @@ export const getAllTags = (
 	posts.forEach((post) => {
 		post.data.tags?.forEach((tag) => {
 			const info = normalizeTag(tag);
-			if (!uniqueTags.has(info.url)) {
+			const existingTag = uniqueTags.get(info.url);
+			if (existingTag) {
+				existingTag.count++;
+			} else {
 				uniqueTags.set(info.url, info);
 			}
 		});
@@ -38,6 +42,7 @@ export const getPostTags = (post: CollectionEntry<"post">): TagInformation[] => 
 			origin: tag,
 			display: info.display,
 			url: info.url,
+			count: 1,
 		};
 	});
 }
@@ -46,7 +51,7 @@ export const normalizeTag = (rawTag: string): TagInformation => {
 	const trimed = rawTag.trim();
 	const display = trimed.normalize('NFKC');
 	const url = display.toLowerCase().replace(/\s+/g, '-');
-	return { origin: rawTag, display, url };
+	return { origin: rawTag, display, url, count: 1 };
 };
 
 const isSame = (a: TagInformation, b: TagInformation) => a.display === b.display && a.origin === b.origin && a.url === b.url

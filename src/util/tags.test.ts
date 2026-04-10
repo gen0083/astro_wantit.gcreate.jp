@@ -9,10 +9,10 @@ describe("getAllTags", () => {
     ] as any;
     const allTags = await getAllTags(dummyPosts);
     expect(allTags).toEqual([
-      { origin: "TypeScript", display: "TypeScript", url: "typescript" },
-      { origin: "Android", display: "Android", url: "android" },
-      { origin: "Rust", display: "Rust", url: "rust" },
-      { origin: "Java", display: "Java", url: "java" },
+      { origin: "TypeScript", display: "TypeScript", url: "typescript", count: 1 },
+      { origin: "Android", display: "Android", url: "android", count: 1 },
+      { origin: "Rust", display: "Rust", url: "rust", count: 1 },
+      { origin: "Java", display: "Java", url: "java", count: 1 },
     ]);
   });
   it("重複したタグがある場合", async () => {
@@ -22,9 +22,9 @@ describe("getAllTags", () => {
 	] as any;
 	const allTags = await getAllTags(dummy);
 	expect(allTags).toEqual([
-		{origin: "Rust", display: "Rust", url: "rust"},
-		{origin: "programing", display: "programing", url: "programing"},
-		{origin: "Android", display: "Android", url: "android"},
+		{origin: "Rust", display: "Rust", url: "rust", count: 2},
+		{origin: "programing", display: "programing", url: "programing", count: 1},
+		{origin: "Android", display: "Android", url: "android", count: 1},
 	]);
   });
   it("表記揺れがある場合", async () => {
@@ -34,9 +34,9 @@ describe("getAllTags", () => {
 	] as any;
 	const allTags = await getAllTags(dummy);
 	expect(allTags).toEqual([
-		{origin: "Rust", display: "Rust", url: "rust"},
-		{origin: "programing", display: "programing", url: "programing"},
-		{origin: "Android", display: "Android", url: "android"},
+		{origin: "Rust", display: "Rust", url: "rust", count: 2},
+		{origin: "programing", display: "programing", url: "programing", count: 1},
+		{origin: "Android", display: "Android", url: "android", count: 1},
 	]);
   });
   it("表記揺れに関してはノーマライズした上でURLが同じなら同じタグと判定する", async () => {
@@ -48,9 +48,9 @@ describe("getAllTags", () => {
 	] as any;
 	const allTags = await getAllTags(dummy);
 	expect(allTags).toEqual([
-		{origin: "Rust", display: "Rust", url: "rust"},
-		{origin: "programing", display: "programing", url: "programing"},
-		{origin: "Android", display: "Android", url: "android"},
+		{origin: "Rust", display: "Rust", url: "rust", count: 2},
+		{origin: "programing", display: "programing", url: "programing", count: 2},
+		{origin: "Android", display: "Android", url: "android", count: 2},
 	]);
   });
 });
@@ -62,8 +62,8 @@ describe("getPostTags", () => {
     } as any;
     const result = getPostTags(post);
     expect(result).toEqual([
-      { origin: "TypeScript", display: "TypeScript", url: "typescript" },
-      { origin: "  React JS  ", display: "React JS", url: "react-js" }
+      { origin: "TypeScript", display: "TypeScript", url: "typescript", count: 1 },
+      { origin: "  React JS  ", display: "React JS", url: "react-js", count: 1 }
     ]);
   });
 
@@ -83,21 +83,21 @@ describe("getPostTags", () => {
 describe("normalizeTag", () => {
   it("前後の空白がトリムされること", () => {
     const result = normalizeTag("  hoge  ");
-    expect(result).toEqual({ origin: "  hoge  ", display: "hoge", url: "hoge" });
+    expect(result).toEqual({ origin: "  hoge  ", display: "hoge", url: "hoge", count: 1 });
   });
 
   it("大文字は小文字に変換されてurlになること", () => {
     const result = normalizeTag("TypeScript");
-    expect(result).toEqual({ origin: "TypeScript", display: "TypeScript", url: "typescript" });
+    expect(result).toEqual({ origin: "TypeScript", display: "TypeScript", url: "typescript", count: 1 });
   });
 
   it("途中の空白はハイフンに変換されてurlになること", () => {
     const result = normalizeTag("Hello World");
-    expect(result).toEqual({ origin: "Hello World", display: "Hello World", url: "hello-world" });
+    expect(result).toEqual({ origin: "Hello World", display: "Hello World", url: "hello-world", count: 1 });
   });
 
   it("NFKC正規化が行われる（全角英数が半角になる等）こと", () => {
     const result = normalizeTag("Ｒｕｓｔ");
-    expect(result).toEqual({ origin: "Ｒｕｓｔ", display: "Rust", url: "rust" });
+    expect(result).toEqual({ origin: "Ｒｕｓｔ", display: "Rust", url: "rust", count: 1 });
   });
 });
