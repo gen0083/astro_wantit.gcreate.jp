@@ -1,0 +1,45 @@
+---
+import ArticleCard from "@/components/ArticleCard.astro";
+import PaginationLink from "@/components/PaginationLink.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollectionEntryPost } from "@/util/contents";
+import { getAllTags, normalizeTag } from "@/util/tags";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allPosts = await getCollectionEntryPost();
+  // ユニークタグのリストを取得
+  const uniqueTags = getAllTags(allPosts);
+  // タグごとにフィルタされたpostの一覧を返す
+  return uniqueTags.flatMap((tag) => {
+    const filterd = allPosts
+      .filter((post) =>
+        post.data.tags?.some((t) => normalizeTag(t).url === tag.url),
+      )
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+    return paginate(filterd, {
+      params: { tag: tag.url },
+      props: { title: tag.display },
+      pageSize: 10,
+    });
+  });
+}) satisfies GetStaticPaths;
+
+const { page, title } = Astro.props;
+const { tag } = Astro.params;
+const pageTitle =
+  page.currentPage === 1 ? title : `${title} - ${page.currentPage}ページ目 -`;
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <ul class="flex flex-col gap-6 max-w-2xl mx-auto py-8">
+    {
+      page.data.map((post) => (
+        <li>
+          <ArticleCard post={post} />
+        </li>
+      ))
+    }
+  </ul>
+  <PaginationLink page={page} baseUrl={`tags/${tag}`} />
+</BaseLayout>
