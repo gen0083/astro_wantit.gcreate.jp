@@ -1,19 +1,13 @@
 ---
-import { getCollectionEntryPost, getLinkUrl } from "@/util/contents";
-import { getAllTags } from "@/util/tags";
-import { getCollection } from "astro:content";
 import { AUTHOR } from "@/constants/site";
+import { getLinkUrl } from "@/util/contents";
+import { getCollection } from "astro:content";
 
 const solids = await getCollection("forsite");
-const allPosts = await getCollectionEntryPost();
-const tags = getAllTags(allPosts);
 ---
 
-<footer class="bg-emerald-950 text-cyan-50">
-  <p class="flex p-8 text-center justify-center">
-    Copyright© {AUTHOR} 2013-{new Date().getFullYear()} All Rights Reserved.
-  </p>
-  <ul class="list-none flex gap-5 justify-center p-4">
+<footer class="bg-emerald-950 text-cyan-50 flex flex-col gap-8 p-8">
+  <ul class="list-none flex gap-5 justify-center">
     <li class="flex"><a href="/">HOME</a></li>
     {
       solids.map((post) => (
@@ -23,20 +17,7 @@ const tags = getAllTags(allPosts);
       ))
     }
   </ul>
-  <ul
-    class="max-w-8/12 m-auto list-none flex flex-wrap gap-5 justify-center p-8"
-  >
-    {
-      tags.map((tag) => (
-        <li class="inline-flex">
-          <a
-            href={getLinkUrl(`tags/${tag.url}`)}
-            class="px-3 py-1 bg-emerald-800 hover:bg-emerald-700 rounded-full text-sm transition-colors"
-          >
-            {tag.display}({tag.count})
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <p class="flex text-center justify-center">
+    Copyright© {AUTHOR} 2013-{new Date().getFullYear()} All Rights Reserved.
+  </p>
 </footer>
