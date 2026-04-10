@@ -6,10 +6,25 @@ import LinkButton from "./LinkButton.astro";
 interface Props {
   page: Page<any>;
   num?: number;
+  baseUrl?: string;
 }
 
-const { page, num } = Astro.props;
-const pagination = makePaginationLink({ page, num });
+const { page, num, baseUrl } = Astro.props;
+const pagination = makePaginationLink({ page, num }).map((p) => {
+  // baseUrlもしくはpage.urlが空ならpageなら何も処理しない
+  if (!baseUrl || !p.url) return p;
+
+  // baseUrlが設定されているもしくはpageにurlがあるならurlをbaseUrlに基づき変形させる
+
+  // page.urlが/指定の場合はbaseUrlに変更する
+  if (p.url === "/") {
+    return { ...p, url: baseUrl };
+  }
+
+  // それ以外のページ('/2'など)は baseUrl を前につける
+  const suffix = p.url.startsWith("/") ? p.url : `/${p.url}`;
+  return { ...p, url: `${baseUrl}${suffix}` };
+});
 ---
 
 <ul class="flex list-none justify-center gap-2 pb-8">
