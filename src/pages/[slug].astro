@@ -16,19 +16,28 @@ import { getPostFilePath } from "@/util/github";
 
 export async function getStaticPaths() {
   const allPosts = await getCollectionEntryPost();
-  return allPosts.map((post) => {
+  // 日付の降順でソート
+  const sortedPosts = allPosts.sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+  );
+
+  return sortedPosts.map((post, index) => {
+    const prevPost = index > 0 ? sortedPosts[index - 1] : null;
+    const nextPost =
+      index < sortedPosts.length - 1 ? sortedPosts[index + 1] : null;
+
     // frontmatterのslugフィールドを優先的に使用、なければpost.slugを使用
     if (!post.data.slug) {
       console.log("slugが指定されていません");
     }
     return {
       params: { slug: post.data.slug || post.id }, // URLになる
-      props: { post },
+      props: { post, prevPost, nextPost },
     };
   });
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await render(post);
 const tags = getPostTags(post);
 let lastModDate = post.data.lastmod;
@@ -124,4 +133,37 @@ const summary = getSummary(post);
     </div>
     <AffiliateLinkParts post={post} />
   </article>
+
+  <nav class="max-w-2xl mx-0 flex justify-between py-8 gap-4">
+    <div class="flex-1 text-left">
+      {
+        prevPost && (
+          <a
+            href={getLinkUrl(`/${prevPost.data.slug || prevPost.id}`)}
+            class="group block p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors no-underline"
+          >
+            <span class="text-sm text-slate-500">前の記事</span>
+            <span class="block font-bold text-slate-700 mt-1 group-hover:underline">
+              {prevPost.data.title}
+            </span>
+          </a>
+        )
+      }
+    </div>
+    <div class="flex-1 text-right">
+      {
+        nextPost && (
+          <a
+            href={getLinkUrl(`/${nextPost.data.slug || nextPost.id}`)}
+            class="group block p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors no-underline"
+          >
+            <span class="text-sm text-slate-500">次の記事</span>
+            <span class="block font-bold text-slate-700 mt-1 group-hover:underline">
+              {nextPost.data.title}
+            </span>
+          </a>
+        )
+      }
+    </div>
+  </nav>
 </BaseLayout>
