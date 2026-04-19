@@ -18,18 +18,23 @@ const tags = getAllTags(await getCollection("post"));
 ---
 
 <BaseLayout pageTitle="タグ一覧">
-  <ul class="m-auto list-none flex flex-wrap gap-5 justify-center p-8">
-    {
-      tags.map((tag) => (
-        <li class="inline-flex">
-          <a
-            href={getLinkUrl(`tags/${tag.url}`)}
-            class="chip"
-          >
-            {tag.display}({tag.count})
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="card mx-auto p-8 my-8">
+    <header>
+      <h1 class="title">タグ一覧</h1>
+    </header>
+    <ul class="list-none flex flex-wrap gap-5 justify-center p-8">
+      {
+        tags.map((tag) => (
+          <li class="inline-flex">
+            <a
+              href={getLinkUrl(`tags/${tag.url}`)}
+              class="chip"
+            >
+              {tag.display}({tag.count})
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </BaseLayout>
