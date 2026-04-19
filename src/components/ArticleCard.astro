@@ -28,9 +28,9 @@ const imagePath = getCoverImage(post.category);
   <ArticleSummary post={post} style={"px-4"}/>
   <footer class="flex px-4 pb-4">
     <time
-      datetime={post.data.date.toISOString()}
+      datetime={post.data.date.toLocaleDateString("ja-JP")}
       class="text-sm text-gray-500 ml-auto"
-      >{post.data.date.toLocaleString("ja-JP")}</time
+    >{post.data.date.toLocaleDateString("ja-JP")}</time
     >
   </footer>
 </article>
