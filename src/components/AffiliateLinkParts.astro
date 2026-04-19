@@ -19,7 +19,7 @@ const amazonLinkBody = `Amazonで「${
   {
     post.data.product?.amazon && (
       <div>
-        <a href={post.data.product.amazon}>{amazonLinkBody}</a>
+        <a class="amazon-af-link" href={post.data.product.amazon}>{amazonLinkBody}</a>
       </div>
     )
   }
