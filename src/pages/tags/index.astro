@@ -24,7 +24,7 @@ const tags = getAllTags(await getCollection("post"));
         <li class="inline-flex">
           <a
             href={getLinkUrl(`tags/${tag.url}`)}
-            class="px-3 py-1 bg-emerald-400 hover:bg-amber-700 rounded-full text-sm transition-colors"
+            class="chip"
           >
             {tag.display}({tag.count})
           </a>
