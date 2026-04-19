@@ -14,8 +14,14 @@ const amazonLinkBody = `Amazonで「${
 }」を確認する`;
 ---
 
-<div class="border-slate-600 border rounded-2xl gap-4 flex flex-col p-4">
+<div class="gap-4 flex flex-col p-4">
   {post.data.product?.kaeyome && <div set:html={post.data.product.kaeyome} />}
-  {post.data.product?.amazon && <div><a href={post.data.product.amazon}>{amazonLinkBody}</a></div>}
+  {
+    post.data.product?.amazon && (
+      <div>
+        <a href={post.data.product.amazon}>{amazonLinkBody}</a>
+      </div>
+    )
+  }
   {post.data.product?.rakuten && <div set:html={post.data.product.rakuten} />}
 </div>
