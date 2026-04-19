@@ -26,7 +26,7 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{pageTitle}{layoutType === "post" ? " - イイモノ -" : ""}</title>
+    <title>{pageTitle} {layoutType === "post" ? " - イイモノ -" : ""}</title>
     <meta name="description" content={pageDescription} />
     <OGP {pageTitle} {pageDescription} {layoutType} {post} />
     <Analytics />
