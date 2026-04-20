@@ -90,5 +90,6 @@ export const getRelatedPostsByTags = async (target: CollectionEntryPost, size: n
       const count = calculateTagsOverlapCount(tags, targetTags);
       return {...post, relatedCount: count};
     }).sort((a, b) => b.relatedCount - a.relatedCount);
-  return related.slice(0, size);
+  return related.filter(p => p.relatedCount > 0)
+    .slice(0, size);
 };
