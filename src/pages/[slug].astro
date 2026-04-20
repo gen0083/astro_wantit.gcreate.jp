@@ -1,7 +1,7 @@
 ---
 import {
   getCollectionEntryPost,
-  getLinkUrl,
+  getLinkUrl, getRelatedPostsByTags,
   getSummary,
 } from "@/util/contents";
 import { render } from "astro:content";
@@ -47,6 +47,7 @@ if (!lastModDate && post.filePath) {
 }
 const imagePath = getCoverImage(post.category);
 const summary = getSummary(post);
+const related = await getRelatedPostsByTags(post);
 ---
 
 <BaseLayout
@@ -132,6 +133,16 @@ const summary = getSummary(post);
       </a>
     </div>
     <AffiliateLinkParts post={post} />
+    <footer>
+      <h2>関連記事</h2>
+      {
+        related.length == 0 ? (<p>関連記事はありません</p>) : (
+          related.map((p) => (
+            <li class="list-none"><a href={getLinkUrl(p.id)}>{p.data.title}</a></li>
+          ))
+        )
+      }
+    </footer>
   </article>
 
   <nav class="max-w-2xl mx-auto flex justify-between py-8 gap-4">

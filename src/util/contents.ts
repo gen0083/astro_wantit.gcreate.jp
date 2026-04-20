@@ -1,6 +1,7 @@
-import { getCollection, type CollectionEntry } from "astro:content";
-import { checkSlugIsUnique } from "./check";
-import { splitCategoryAndSlugFromPostId } from "./url";
+import {type CollectionEntry, getCollection} from "astro:content";
+import {checkSlugIsUnique} from "./check";
+import {splitCategoryAndSlugFromPostId} from "./url";
+import {calculateTagsOverlapCount, getPostTags} from "@/util/tags.ts";
 
 /**
  * 改行コードで区切られた文字列を段落ごとの配列に分割する。
@@ -49,7 +50,7 @@ export const getCollectionEntryPost = async (): Promise<
   const allPosts = await getCollection("post");
   checkSlugIsUnique(allPosts);
   return allPosts.map((post) => {
-    const { category, slug } = splitCategoryAndSlugFromPostId(post.id);
+    const {category, slug} = splitCategoryAndSlugFromPostId(post.id);
     return {
       ...post,
       category,
@@ -71,4 +72,23 @@ export const getLinkUrl = (slug: string) => {
   }
   const start = slug.startsWith('/') ? slug : `/${slug}`;
   return start.endsWith('/') ? start : `${start}/`;
+};
+
+/**
+ * 対象のPostのタグから関連記事を抽出する。タグの重複が多いほど関連度が高いと判定する。
+ * @param target 対象となる記事
+ * @param size 関連記事として取得する記事数（最大数、デフォルトで5）
+ * @returns 抽出された関連記事の配列、関連記事がない場合は空の配列を返す
+ */
+export const getRelatedPostsByTags = async (target: CollectionEntryPost, size: number = 5): Promise<CollectionEntryPost[]> => {
+  const allPosts = await getCollectionEntryPost();
+  const targetTags = getPostTags(target);
+  const related = allPosts
+    .filter(p => p.id != target.id) // 自身を関連記事の対象から外す
+    .map((post) => {
+      const tags = getPostTags(post);
+      const count = calculateTagsOverlapCount(tags, targetTags);
+      return {...post, relatedCount: count};
+    }).sort((a, b) => b.relatedCount - a.relatedCount);
+  return related.slice(0, size);
 };

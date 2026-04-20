@@ -1,4 +1,4 @@
-import type { CollectionEntry } from "astro:content";
+import type {CollectionEntry} from "astro:content";
 
 export type TagInformation = {
   origin: string;
@@ -55,3 +55,9 @@ export const normalizeTag = (rawTag: string): TagInformation => {
 };
 
 const isSame = (a: TagInformation, b: TagInformation) => a.display === b.display && a.origin === b.origin && a.url === b.url
+
+export const calculateTagsOverlapCount = (a: TagInformation[], b: TagInformation[]): number => {
+  const arrayA = a.map(t => t.url);
+  const arrayB = new Set(b.map(t => t.url));
+  return arrayA.filter(url => arrayB.has(url)).length;
+}
