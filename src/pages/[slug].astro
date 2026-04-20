@@ -145,13 +145,13 @@ const related = await getRelatedPostsByTags(post);
     </footer>
   </article>
 
-  <nav class="max-w-2xl mx-auto flex justify-between py-8 gap-4">
-    <div class="flex-1 text-left">
+  <nav class="max-w-2xl mx-auto flex justify-between items-stretch py-8 gap-4">
+    <div class="flex-1 flex flex-col text-left">
       {
         prevPost && (
           <a
             href={getLinkUrl(`/${prevPost.data.slug || prevPost.id}`)}
-            class="group block p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors no-underline"
+            class="group flex flex-col h-full p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors no-underline"
           >
             <span class="text-sm text-slate-500">前の記事</span>
             <span class="block font-bold text-slate-700 mt-1 group-hover:underline">
@@ -161,12 +161,12 @@ const related = await getRelatedPostsByTags(post);
         )
       }
     </div>
-    <div class="flex-1 text-right">
+    <div class="flex-1 flex flex-col text-right">
       {
         nextPost && (
           <a
             href={getLinkUrl(`/${nextPost.data.slug || nextPost.id}`)}
-            class="group block p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors no-underline"
+            class="group flex flex-col h-full p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors no-underline"
           >
             <span class="text-sm text-slate-500">次の記事</span>
             <span class="block font-bold text-slate-700 mt-1 group-hover:underline">
