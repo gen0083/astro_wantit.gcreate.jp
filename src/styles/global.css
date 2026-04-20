@@ -5,6 +5,7 @@
 @theme {
   /* プロジェクト独自のテーマ変数（カラー、フォントなど）をここに定義します */
   --color-brand-primary: #0fa9e6;
+  --color-link-hover: oklch();
 }
 
 @layer base {
@@ -12,6 +13,10 @@
   body {
     background-color: var(--color-slate-50);
     color: var(--color-slate-900);
+  }
+
+  a {
+    @apply hover:text-rose-400;
   }
 }
 
