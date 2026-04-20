@@ -23,6 +23,10 @@
   text-indent: 1em;
 }
 
+.prose a {
+  @apply hover:text-rose-400;
+}
+
 /* amazon-af-link を含む p タグは字下げを無効化する */
 .prose p:has(.amazon-af-link) {
   text-indent: 0;
