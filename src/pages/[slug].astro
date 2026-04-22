@@ -104,20 +104,24 @@ const related = await getRelatedPostsByTags(post);
         </ul>
       </div>
       <Image src={imagePath} alt={`${post.category} image`} />
-      <div>
-        {post.data.product?.name && <p>{post.data.product.name}</p>}
-        {post.data.product?.number && <p>{post.data.product.number}</p>}
-        {
-          typeof post.data.product?.rate === "number" && (
-            <div class="flex items-center gap-2 mb-2">
-              <StarRating rate={post.data.product.rate} />
-              <span class="text-sm text-slate-600">
-                ({post.data.product.rate})
-              </span>
-            </div>
-          )
-        }
-        {post.data.product?.comment && <p>{post.data.product.comment}</p>}
+      <div class="border rounded-2xl p-4 flex flex-col gap-4">
+        {post.data.product?.name &&
+          <div>{post.data.product.name}</div>}
+        {post.data.product?.number &&
+          <div>{post.data.product.number}</div>}
+        {post.data.product?.link &&
+          <div><a href={post.data.product.link}>{post.data.product.link}</a></div>}
+        <div class="flex flex-row items-center gap-4">
+          {
+            typeof post.data.product?.rate === "number" && (
+              <div class="flex items-center gap-2">
+                <StarRating rate={post.data.product.rate}/>
+              </div>
+            )
+          }
+          {post.data.product?.comment &&
+            <div>{post.data.product.comment}</div>}
+        </div>
       </div>
     </header>
     <div>

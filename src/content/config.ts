@@ -1,6 +1,6 @@
-import { getCategorySlug } from "@/util/url";
-import { glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import {getCategorySlug} from "@/util/url";
+import {glob} from "astro/loaders";
+import {defineCollection, z} from "astro:content";
 
 const postCollection = defineCollection({
   loader: glob({
@@ -22,6 +22,7 @@ const postCollection = defineCollection({
       .object({
         name: z.string().optional(),
         number: z.string().optional(),
+        link: z.string().optional(),
         rate: z.number().optional(),
         comment: z.string().optional(),
         kaeyome: z.string().optional(),
