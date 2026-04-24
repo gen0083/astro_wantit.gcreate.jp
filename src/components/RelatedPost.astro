@@ -1,0 +1,24 @@
+---
+import {type CollectionEntryPost, getPostUrl} from "@/util/contents.ts";
+interface Props {
+  related: CollectionEntryPost[];
+}
+const {related} = Astro.props;
+const hasNoRelatedPost = related.length == 0;
+---
+<footer>
+  <h2>関連記事</h2>
+  {
+    hasNoRelatedPost ?
+      (<p>関連記事はありません</p>) :
+      (
+        <ul>
+          {
+            related.map((p) => (
+              <li class="list-none"><a href={getPostUrl(p)}>{p.data.title}</a></li>
+            ))
+          }
+        </ul>
+      )
+  }
+</footer>

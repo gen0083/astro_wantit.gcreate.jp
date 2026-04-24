@@ -15,6 +15,7 @@ import { Image } from "astro:assets";
 import StarRating from "@/components/StarRating.astro";
 import AffiliateLinkParts from "@/components/AffiliateLinkParts.astro";
 import { getPostFilePath } from "@/util/github";
+import RelatedPost from "@/components/RelatedPost.astro";
 
 export async function getStaticPaths() {
   const allPosts = await getCollectionEntryPost();
@@ -139,16 +140,7 @@ const related = await getRelatedPostsByTags(post);
       </a>
     </div>
     <AffiliateLinkParts post={post} />
-    <footer>
-      <h2>関連記事</h2>
-      {
-        related.length == 0 ? (<p>関連記事はありません</p>) : (
-          related.map((p) => (
-            <li class="list-none"><a href={getPostUrl(p)}>{p.data.title}</a></li>
-          ))
-        )
-      }
-    </footer>
+    <RelatedPost related={related}/>
   </article>
 
   <nav class="max-w-2xl mx-auto flex justify-between items-stretch py-8 gap-4">
