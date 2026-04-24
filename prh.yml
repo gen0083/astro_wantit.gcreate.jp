@@ -1,0 +1,190 @@
+version: 1
+
+# 本ファイルは設定の仕方の見本であり、実用的な校正ルールではありません。
+# もし、もっと充実した別のルールを使いたい時は以下のURLを参照してください。
+# https://github.com/prh/rules
+# おすすめは media/techbooster.yml です。
+
+# 下記の説明を参考に、git submoduleとimportsを使って参照するのがよいでしょう。
+# リポジトリの設定 git submodule add https://github.com/prh/rules.git prh-rules
+
+# 別の設定ファイルを読み込み、mergeすることもできます。
+imports:
+  - ./prh-rules/media/techbooster.yml
+  - ./prh-rules/files/markdown.yml
+  - ./prh-rules/files/review.yml
+
+  # imports にはいくつかのオプションが指定できる
+  # - path: other-rules.yml
+    # 連鎖的なimportを禁止する
+    # disableImports: true
+    # importするルールで不都合なものは殺すことができる
+    # patternやexpectedに指定する文字列は --rules-yaml で得られるパース後の表現を使うこと
+    # ignoreRules:
+      # pattern: /a/ と等価
+      # - /a/ 
+      # - pattern:  /a/
+      # - expected: /b/
+
+rules:
+  # 大文字小文字全角半角の統一
+  - expected: Cookie
+  # 以下と等価 正規表現には強制でgフラグが付く
+  # - expected: Cookie
+  #   pattern: "/[CcＣｃ][OoＯｏ][OoＯｏ][KkＫｋ][IiＩｉ][EeＥｅ]/g"
+  #   options:
+  #     wordBoundary: false
+  #   specs: []
+
+  # 変換結果についてテストも書ける
+  - expected: jQuery
+    specs:
+      - from: jquery
+        to:   jQuery
+      - from: ＪＱＵＥＲＹ
+        to:   jQuery
+  - expected: WordPress
+    specs:
+      - from: wordpress
+        to: WordPress
+      - from: Wordpress
+        to: WordPress
+  - expected: iOS
+    specs:
+      - from: ios
+        to: iOS
+  
+  # よくやらかすtypo
+  - expected: 私の場合
+    pattern: 渡しの場合
+    specs:
+      - from: 渡しの場合
+        to: 私の場合
+  # もともと設定してあるようだが「故に」を先に認識してしまうようでその回避のために追加
+  - expected: ゆえに
+    pattern: (^事)故に
+  # xxの様子。といった表現の際にひっかかるので追加
+  - expected: のよう
+    pattern: の様(^子)?
+    regexpMustEmpty: $1
+  - expected: のような
+    pattern: の様な
+    specs:
+      - from: の様な
+        to: のような
+  - expected: こと
+    pattern: /(^火)事(^故)/
+  - expected: とおり
+    pattern:  (?<!思い)通り
+    prh: 漢字で書かず、ひらがなで書くと読みやすくなります。"どおり"のケースもありえます
+  # これはmedia/techboosterから読み込んでいる設定で便利なんだけど、「30円以下の商品」のような表現にひっかかる
+  # TODO: 30円より安い商品と言い換えればいいのだが、正規表現を修正できるならしたい
+  # - expected: 次$1
+  #   pattern:  /(?:以下|下記)(の|に|で)/
+  #     specs:
+  #       - from: 以下の
+  #         to:   次の
+  #       - from: 以下に
+  #         to:   次に
+  #       - from: 次回
+  #         to:   次回
+  #       - from: 下記の
+  #         to:   次の
+  #     prh: 書籍の場合は、以下ではなく次を利用します（常に下にあるとは限らないため）
+
+  # 漫画・マンガ・コミックと表記ゆれが多いので、コミックで統一することにした
+  # ただし「マンガで分かる」という表現を「コミックで分かる」とは言わないのでそれは除外する
+  # 他にも漫画家、4コマ漫画など、意外とコミックで統一するほうが難しいんじゃないかという気がしてきた
+  - expected: コミック
+    pattern: (?<!コマ)(漫画|マンガ|まんが)(?!で(わかる|分かる)|家)
+    # 否定先読みはJSにないらしい←普通に使えるらしい
+    # 否定先読みを使わない場合は以下のような書き方になる
+    # pattern: /(漫画|漫画)(で(わかる|分かる))?/
+    # regexpMustEmpty: $2
+    # regexpMustEmptyとgroup2の最後を?で締めくくるのがミソ
+
+  - expected: で
+    pattern:  /(?<!ま)でで(?!(きる|きます|す))/
+    specs:
+      - from: でで
+        to:   で
+      - from: Aでできる
+        to:   Aでできる
+      - from: までです
+        to: までです
+  - expected: いう
+    pattern: (?<!正直に)言う
+    prh: 漢字で書かず、ひらがなで書くと読みやすくなります
+  - expected: （$1）
+    pattern:  /\(((?!\[|\{).+?)\)/
+    specs:
+      - from: そうですね(笑)
+        to:   そうですね（笑）
+      - from: (@<fn>{test})
+        to:   （@<fn>{test}）
+      - from: "(ほげ)ほげ)"
+        to:   "（ほげ）ほげ)"
+    prh: 半角カッコの代わりに全角カッコを使うこと。文字のバランスが崩れるためです
+  - expected: 次$1
+    pattern:  /(?<!半分)(?:以下|下記)(の|に)/
+    specs:
+      - from: 以下の
+        to:   次の
+      - from: 以下に
+        to:   次に
+      - from: 次回
+        to:   次回
+      - from: 下記の
+        to:   次の
+    prh: 書籍の場合は、以下ではなく次を利用します（常に下にあるとは限らないため）
+
+  # 変換結果が期待通りではなかった場合、ルールのロードに失敗する つまり、ルールのテストが書ける
+  # - expected: JavaScript
+  #   specs:
+  #     - from: JAVASCRIPT
+  #       to:   JavaScprit # この場合はテスト側が間違ってる！
+  # Error: JavaScript spec failed. "JAVASCRIPT", expected "JavaScprit", but got "JavaScript", /[JjＪｊ][AaＡａ][VvＶｖ][AaＡａ][SsＳｓ][CcＣｃ][RrＲｒ][IiＩｉ][PpＰｐ][TtＴｔ]/g
+
+  # 表現の統一を図る
+  - expected: デフォルト
+    pattern:  ディフォルト
+
+  # patternは複数記述可能 patterns としてもOK
+  - expected: ハードウェア
+    patterns:
+      - ハードウエアー
+      - ハードウェアー
+      - ハードウエア
+
+  # 否定戻り先読みが欲しいがJSにはない… regexpMustEmptyで、特定のキャプチャグループが空であることを指定して代用とする
+  - expected: ソフトウェア
+    pattern:  /(日経)?ソフトウエア/
+    regexpMustEmpty: $1
+    specs:
+      # 普通に変換
+      - from: 広義のソフトウエア
+        to:   広義のソフトウェア
+      # 日経ソフトウエア(書名)は変換しない
+      - from: 日経ソフトウエア
+        to:   日経ソフトウエア
+
+  # 長音の統一には否定後読みを活用する そうしないと サーバー が サーバーー にされてしまったりする
+  - expected: サーバ
+    pattern: サーバー
+
+  # 単語境界の区別
+  - expected: js
+  # pattern: "/\b[JjＪｊ][SsＳｓ]\b/g" # と等価 \b が前後に付与される
+    options:
+      wordBoundary: true
+    specs:
+      - from: foo JS bar
+        to:   foo js bar
+      - from: foo altJS bar
+        to:   foo altJS bar
+      # 日本語+単語境界の仕様は自分で調べてね…！
+      - from: 今日もJS祭り
+        to:   今日もjs祭り
+
+  - expected: $1とき
+    pattern:  /(の)時(?!点|代|々|間|期)/

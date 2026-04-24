@@ -1,0 +1,21 @@
+{
+  "filters": {
+    "comments": true
+  },
+  "rules": {
+    "max-ten": {
+        "max" : 3
+    },
+    "preset-jtf-style": {
+      "3.3.かっこ類と隣接する文字の間のスペースの有無": false,
+      "4.2.6.ハイフン(-)": false,
+      "4.2.7.コロン(：)": false,
+      "4.3.1.丸かっこ（）": false,
+      "2.2.3.一部の助数詞の表記": false,
+      "4.3.2.大かっこ［］": false
+    },
+    "prh": {
+      "rulePaths" :["./prh.yml"]
+    }
+  }
+}
