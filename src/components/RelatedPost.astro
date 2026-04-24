@@ -1,5 +1,6 @@
 ---
 import {type CollectionEntryPost, getPostUrl} from "@/util/contents.ts";
+import StarRating from "@/components/StarRating.astro";
 interface Props {
   related: CollectionEntryPost[];
 }
@@ -12,10 +13,24 @@ const hasNoRelatedPost = related.length == 0;
     hasNoRelatedPost ?
       (<p>関連記事はありません</p>) :
       (
-        <ul>
+        <ul class="flex flex-col gap-4 m-0! p-0">
           {
             related.map((p) => (
-              <li class="list-none"><a href={getPostUrl(p)}>{p.data.title}</a></li>
+              <li class="list-none m-0!">
+                <div class="flex flex-row items-center justify-between">
+                  <div class="flex flex-col">
+                    <a href={getPostUrl(p)}>
+                      <span class="text-lg block">{p.data.product?.name || "none"}</span>
+                      <span class="text-sm block">{p.data.title}</span>
+                    </a>
+                  </div>
+                  <div>
+                    {typeof p.data.product?.rate == "number" &&
+                      <StarRating rate={p.data.product.rate}/>
+                    }
+                  </div>
+                </div>
+              </li>
             ))
           }
         </ul>
