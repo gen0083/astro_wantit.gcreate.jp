@@ -75,6 +75,17 @@ export const getLinkUrl = (slug: string) => {
 };
 
 /**
+ * postのURLを返す。postのURL形式はhttps://wantit.gcreate.jp/slug/になっている。
+ * slugが設定されていない場合はファイル名から導き出されたidになる。
+ * @param post URLを取得したい対象のpost
+ * @returns postのURL（/slug/）
+ * @throws {Error} 相対パスがパスに含まれる場合
+ */
+export const getPostUrl = (post: CollectionEntry<"post">): string => {
+  return getLinkUrl(post.data.slug || post.id);
+}
+
+/**
  * 対象のPostのタグから関連記事を抽出する。タグの重複が多いほど関連度が高いと判定する。
  * @param target 対象となる記事
  * @param size 関連記事として取得する記事数（最大数、デフォルトで5）

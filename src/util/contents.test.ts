@@ -1,10 +1,6 @@
-import { describe, expect, it } from "vitest";
-import {
-  getCollectionEntryPost,
-  getLinkUrl,
-  getSummary,
-  toParagraphs,
-} from "./contents";
+import {describe, expect, it} from "vitest";
+import {getCollectionEntryPost, getLinkUrl, getPostUrl, getSummary, toParagraphs,} from "./contents";
+import type {CollectionEntry} from "astro:content";
 
 describe("getSummary()", () => {
   describe("descriptionがあるパターン", () => {
@@ -104,5 +100,31 @@ describe("getLinkUrl", () => {
     expect(() => getLinkUrl("./hoge")).toThrowError();
     expect(() => getLinkUrl("../hoge")).toThrowError();
     expect(() => getLinkUrl("hoge/../fuga")).toThrowError();
+  });
+});
+
+describe("getPostUrl", () => {
+  it("slugが設定されている場合はslugをベースにしたURLを返す", () => {
+    const post = {
+      id: "fallback-id",
+      data: {slug: "custom-slug"}
+    } as CollectionEntry<"post">;
+    expect(getPostUrl(post)).toEqual("/custom-slug/");
+  });
+
+  it("slugが設定されていない場合はidをベースにしたURLを返す", () => {
+    const post = {
+      id: "fallback-id",
+      data: {}
+    } as CollectionEntry<"post">;
+    expect(getPostUrl(post)).toEqual("/fallback-id/");
+  });
+
+  it("相対パスの指定子が含まれるslugが設定されている場合はエラーを投げる", () => {
+    const post = {
+      id: "fallback-id",
+      data: {slug: "../custom-slug"}
+    } as CollectionEntry<"post">;
+    expect(() => getPostUrl(post)).toThrowError();
   });
 });

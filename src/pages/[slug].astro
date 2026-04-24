@@ -1,8 +1,10 @@
 ---
 import {
   getCollectionEntryPost,
-  getLinkUrl, getRelatedPostsByTags,
+  getLinkUrl,
+  getRelatedPostsByTags,
   getSummary,
+  getPostUrl,
 } from "@/util/contents";
 import { render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -142,7 +144,7 @@ const related = await getRelatedPostsByTags(post);
       {
         related.length == 0 ? (<p>関連記事はありません</p>) : (
           related.map((p) => (
-            <li class="list-none"><a href={getLinkUrl(p.id)}>{p.data.title}</a></li>
+            <li class="list-none"><a href={getPostUrl(p)}>{p.data.title}</a></li>
           ))
         )
       }
@@ -154,7 +156,7 @@ const related = await getRelatedPostsByTags(post);
       {
         prevPost && (
           <a
-            href={getLinkUrl(`/${prevPost.data.slug || prevPost.id}`)}
+            href={getPostUrl(prevPost)}
             class="group flex flex-col h-full p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors no-underline"
           >
             <span class="text-sm text-slate-500">前の記事</span>
@@ -169,7 +171,7 @@ const related = await getRelatedPostsByTags(post);
       {
         nextPost && (
           <a
-            href={getLinkUrl(`/${nextPost.data.slug || nextPost.id}`)}
+            href={getPostUrl(nextPost)}
             class="group flex flex-col h-full p-4 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors no-underline"
           >
             <span class="text-sm text-slate-500">次の記事</span>
