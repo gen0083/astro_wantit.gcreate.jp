@@ -18,7 +18,7 @@ product:
 前編では壁に遮音シートを貼るとこまでやった。後編ではそこから壁の仕上げまでをお届けしたいと思う。
 
 <!-- textlint-disable -->
-[前編はこちら]({{< ref "soundproofing_part1" >}})
+[前編はこちら](/soundproofing_part1/)
 <!-- textlint-enable -->
 
 <!--more-->

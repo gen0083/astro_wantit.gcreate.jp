@@ -40,7 +40,9 @@ product:
 
 ## ノイズキャンセリングヘッドホンとの合わせ技
 
-[ノイズキャンセリングヘッドホンの記事］({{< ref "post/pc/noise_cancelling_headphone_wh1000xm3.md" >}})
+<!-- textlint-disable -->
+[ノイズキャンセリングヘッドホンの記事］(/post/pc/noise_cancelling_headphone_wh1000xm3/)
+<!-- textlint-enable -->
 
 滅多に合わせて使うことはないのだが、ノイズキャンセリングヘッドホンと掛け合わせると遮音性はかなり高くなる。耳への痛さは耳栓のみの場合とあまり変わらない。
 

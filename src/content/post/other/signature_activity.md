@@ -55,8 +55,6 @@ tags:
 
 署名活動の是非は、個人個人で考えるべきである。本当に遺族が行っている署名なのか調べてから署名を送るのも大事だ。ちなみに一応調べたつもりだが、ご本人なんですよね？
 
-{{<youtube Y7TSDYQNJ_U>}}
-
 <https://www.tokyo-np.co.jp/article/national/list/201907/CK2019071902000151.html>
 
 ## 最後に
