@@ -1,0 +1,14 @@
+name: Assign reviewer
+on:
+ pull_request
+
+jobs:
+  assign-reviewer:
+    if: github.actor != 'gen0083'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign Reviewer
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          reviewers: 'gen0083'
