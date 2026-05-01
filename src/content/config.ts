@@ -4,7 +4,7 @@ import {defineCollection, z} from "astro:content";
 
 const postCollection = defineCollection({
   loader: glob({
-    pattern: "**/[^_]*.{md,mdx}",
+    pattern: "**/[^_]*.md",
     base: "./src/content/post",
     generateId: ({ entry, base }) => {
       return getCategorySlug(entry);
