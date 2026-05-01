@@ -15,7 +15,7 @@
     color: var(--color-slate-900);
   }
 
-  a {
+  a:not(.chip) {
     @apply hover:text-rose-400;
   }
 }
