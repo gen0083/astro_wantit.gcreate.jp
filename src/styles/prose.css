@@ -23,8 +23,12 @@
   text-indent: 1em;
 }
 
-.prose a {
+.prose a:not(.chip) {
   @apply hover:text-rose-400;
+}
+
+.prose a.chip {
+  @apply hover:text-slate-800;
 }
 
 /* amazon-af-link を含む p タグは字下げを無効化する */
