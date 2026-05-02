@@ -2,6 +2,7 @@
 
 # refer: https://gist.github.com/miukoba/fc3c10a25c1c675c1e97
 
+git fetch --prune
 git fetch origin main:main && \
 git checkout main && \
 git branch --merged main | grep -vE '^\*|\<main\>' | xargs -I % git branch -d % && \
