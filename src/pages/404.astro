@@ -7,7 +7,10 @@ import { getCollection } from "astro:content";
 // ※運用時は、Astroの getCollection などを使って全記事のURLを動的に生成してここに渡すのがおすすめです。
 const allPosts = await getCollection("post");
 const allForSite = await getCollection("forsite");
-const validUrls = [...allPosts.map(p => getPostUrl(p)), ...allForSite.map(p => `/forsite/${p.id}/`)];
+const validUrls = [
+  ...allPosts.map((p) => getPostUrl(p)),
+  ...allForSite.map((p) => `/forsite/${p.id}/`),
+];
 ---
 
 <BaseLayout layoutType="default" pageTitle="404" pageDescription="">
@@ -15,8 +18,14 @@ const validUrls = [...allPosts.map(p => getPostUrl(p)), ...allForSite.map(p => `
     <h1>404</h1>
     <p>お探しのページが見つかりません、URLが変更になった可能性があります</p>
 
-    <div id="suggestions" style="display: none;" class="mt-6 p-4 bg-slate-50 rounded-lg">
-      <p class="font-bold mb-2 text-slate-800">もしかして、以下のページをお探しですか？</p>
+    <div
+      id="suggestions"
+      style="display: none;"
+      class="mt-6 p-4 bg-slate-50 rounded-lg"
+    >
+      <p class="font-bold mb-2 text-slate-800">
+        もしかして、以下のページをお探しですか？
+      </p>
       <ul id="suggestion-list" class="mb-0"></ul>
     </div>
 
@@ -40,8 +49,8 @@ const validUrls = [...allPosts.map(p => getPostUrl(p)), ...allForSite.map(p => `
           } else {
             matrix[i][j] = Math.min(
               matrix[i - 1][j - 1] + 1, // 置換
-              matrix[i][j - 1] + 1,     // 挿入
-              matrix[i - 1][j] + 1      // 削除
+              matrix[i][j - 1] + 1, // 挿入
+              matrix[i - 1][j] + 1, // 削除
             );
           }
         }
@@ -49,27 +58,45 @@ const validUrls = [...allPosts.map(p => getPostUrl(p)), ...allForSite.map(p => `
       return matrix[b.length][a.length];
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
       const currentPath = window.location.pathname;
-      
+
+      // Analyticsへ404エラーを記録
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "404_error", {
+          event_category: "Error",
+          event_label: currentPath,
+          non_interaction: true,
+        });
+      } else if (typeof window.dataLayer !== "undefined") {
+        window.dataLayer.push({
+          event: "404_error",
+          error_path: currentPath,
+        });
+      }
+
       // パスとURLリストの類似度を計算し、配列にする
-      const scoredUrls = validUrls.map(url => {
+      const scoredUrls = validUrls.map((url) => {
         return {
           url: url,
-          score: getLevenshteinDistance(currentPath, url)
+          score: getLevenshteinDistance(currentPath, url),
         };
       });
 
       // スコア順（距離が近い＝似ている順）に並び替えて、上位3件を取得
-      const topMatches = scoredUrls.sort((a, b) => a.score - b.score).slice(0, 3);
+      const topMatches = scoredUrls
+        .sort((a, b) => a.score - b.score)
+        .slice(0, 3);
 
       // ある程度似ているURLが存在する場合のみ表示（スコアが現在のURL文字数未満などを基準に）
       if (topMatches.length > 0 && topMatches[0].score < currentPath.length) {
-        const suggestionsDiv = document.getElementById('suggestions');
-        const suggestionList = document.getElementById('suggestion-list');
-        
-        suggestionList.innerHTML = topMatches.map(match => `<li><a href="${match.url}">${match.url}</a></li>`).join('');
-        suggestionsDiv.style.display = 'block';
+        const suggestionsDiv = document.getElementById("suggestions");
+        const suggestionList = document.getElementById("suggestion-list");
+
+        suggestionList.innerHTML = topMatches
+          .map((match) => `<li><a href="${match.url}">${match.url}</a></li>`)
+          .join("");
+        suggestionsDiv.style.display = "block";
       }
     });
   </script>
