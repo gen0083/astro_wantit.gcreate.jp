@@ -63,14 +63,14 @@ const validUrls = [
 
       // Analyticsへ404エラーを記録
       if (typeof window.gtag === "function") {
-        window.gtag("event", "404_error", {
+        window.gtag("event", "page404", {
           event_category: "Error",
           event_label: currentPath,
           non_interaction: true,
         });
       } else if (typeof window.dataLayer !== "undefined") {
         window.dataLayer.push({
-          event: "404_error",
+          event: "page404",
           error_path: currentPath,
         });
       }
