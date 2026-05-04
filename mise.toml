@@ -11,6 +11,14 @@ run = "npm run astro dev --force"
 [tasks.sync]
 run = "npm run astro sync"
 
+[tasks.build]
+description = "build"
+run = "npm run build"
+
+[tasks.preview]
+depends = "build"
+run ="npm run preview"
+
 [tasks.new]
 description = "Create a new blog post"
 run = "node scripts/new-post.mjs $@"
