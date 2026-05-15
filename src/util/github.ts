@@ -12,5 +12,5 @@ export const getPostFilePath = (post: CollectionEntry<"post">) => {
 		return `vscode://file${process.cwd()}/${filePath}`;
 	}
 
-	return `https:/github.com/gen0083/astro_wantit/blob/main/${filePath}`;
+	return `https://github.com/gen0083/astro_wantit/blob/main/${filePath}`;
 };
